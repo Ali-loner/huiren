@@ -31,14 +31,14 @@
                 v-model.trim="dialog1"
               ></el-input>
               <span @click="seek1" class="el-icon-s-promotion"></span>
+              <span class="new-start-item" @click="restartDialog"
+                >New Chat</span
+              >
             </div>
           </div>
           <div class="charts">
-            <EchartsItem
-              v-if="chartTableData.part.length"
-              ref="echarts"
-              :option="opts1"
-            />
+            <!-- v-if="chartTableData.part.length" -->
+            <EchartsItem ref="echarts" :option="opts1" />
           </div>
           <div style="padding: 0 48px 8px 48px">
             <table v-if="chartTableData.part.length" border="1" width="100%">
@@ -75,15 +75,147 @@
         </div>
 
         <div class="dialog-box-right">
-          <div class="header">
-            <!-- <el-select size="mini" v-model="gptValue" placeholder="请选择">
-                                <el-option
-                                  v-for="item in options"
-                                  :key="item.value"
-                                  :label="item.label"
-                                  :value="item.value"
-                                ></el-option>
-            </el-select>-->
+          <div class="service-box">
+            <div class="left-box">
+              <div class="service-title">客服交互</div>
+
+              <div class="service-content">
+                <div class="service-item right">
+                  <div class="service-card">
+                    <div class="card-title">
+                      <div class="btn-person">人类客服</div>
+                    </div>
+                    <div class="card-content">
+                      <div class="btn-ai">AI客服</div>
+                      <div class="desc">
+                        您好，汇仁药业客服中心，请问有什么可以帮您？
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="service-item">
+                  <div class="msg-card">
+                    <div class="card-title">
+                      <div class="btn-name">孙先生</div>
+                    </div>
+                    <div class="card-content">
+                      <div class="desc">我要购买你们的产品</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-item">
+                  <div class="finish-card">
+                    <div class="card-title">
+                      本轮对话已结束，以下是对本次对话的整体评价：
+                    </div>
+                    <div class="card-content">
+                      <div class="desc">
+                        此处为本次圣诞的整体评价详情信息...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right-box">
+              <div class="asideBox">
+                <div>
+                  <span>客服会话</span>
+                  <span>【 R3】</span>
+                </div>
+                <div>
+                  <span>ID：</span>
+                  <span>【呼进买药-购买意图未知- BR1】</span>
+                </div>
+                <div>
+                  <span>知识库引用来源：</span>
+                  <span>【UMB V10 标准话术】</span>
+                </div>
+                <div>
+                  <span>话术对齐得分</span>
+                  <span>【85%】</span>
+                </div>
+                <div>
+                  <span>话术对齐总分</span>
+                  <span>【70%】</span>
+                </div>
+              </div>
+              <div class="asideBox">
+                <div>
+                  <span>用户意图识别</span>
+                </div>
+                <div>
+                  <span>ID：</span>
+                  <span>【呼进买药--购买意图未知-BR1】</span>
+                </div>
+                <div>
+                  <span>用户情绪识别 ：</span>
+                  <span>【中性】</span>
+                </div>
+                <div>
+                  <span>话术对齐总分：</span>
+                  <span>【70%】</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-box">
+            <div class="chat-header">
+              <div class="chat-body">
+                <div class="name-item hasMsg">王先生</div>
+                <div class="name-item hasMsg">李先生</div>
+                <div class="name-item">胡女士</div>
+                <div class="name-item active">孙先生</div>
+              </div>
+
+              <div class="chat-body-right">
+                <el-select size="mini" v-model="gptValue" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-switch
+                  active-value="user"
+                  inactive-value="person"
+                  v-model="switchValue"
+                  active-color="#eee"
+                  inactive-color="#eee"
+                  disabled
+                ></el-switch>
+                <span class="desc">客服/用户切换</span>
+              </div>
+            </div>
+            <div class="chat-content">
+              <el-input
+                suffix-icon
+                placeholder="当前您正在模拟人类用户，在此发言"
+                v-model.trim="dialog1"
+              ></el-input>
+              <span @click="seek1" class="el-icon-s-promotion"></span>
+
+              <div class="chat-btn-box">
+                <span class="new-start-item" @click="restartDialog">挂机</span>
+                <span class="new-chat-item" @click="restartDialog"
+                  >New Chat</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="header">
+            <el-select size="mini" v-model="gptValue" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
             <span class="title">ChatGPT 4o</span>
 
             <span class="desc">客服/用户切换</span>
@@ -95,16 +227,7 @@
               inactive-color="#eee"
               disabled
             ></el-switch>
-            <!-- <el-switch
-                    active-value="person"
-                    inactive-value="user"
-                    v-model="switchValue2"
-                    active-color="#eee"
-                    inactive-color="#eee"
-                    disabled
-                  ></el-switch>
-            <span class="desc">阶段数据</span>-->
-            <!-- <el-link type="danger" @click="showEnd = true">结束本轮对话</el-link> -->
+           
           </div>
           <div id="dialogBox" class="content">
             <div class="content-l">
@@ -164,19 +287,12 @@
                     <span>{{ item.chartDetail.decisionMood }}</span>
                   </div>
                 </div>
-                <!-- <div class="result">
-                      <p>评分表 {{ item }}</p>
-                </div>-->
               </div>
               <div v-if="showEnd" class="dialog-end">
                 <div class="main">
                   本轮对话已结束，以下是对本次对话的整体评价
                 </div>
                 <div class="desc">此处为本次圣诞的整体评价详情信息...</div>
-                <!-- <br />
-                    <el-button type="primary" size="mini" @click="showEnd = false"
-                      >开始新对话</el-button
-                >-->
               </div>
             </div>
             <div v-if="isPC" class="content-r"></div>
@@ -184,10 +300,6 @@
           <div class="new-start">
             <span class="new-start-item" @click="restartDialog">New Chat</span>
             <span class="new-start-item" @click="stopDialog">挂 机</span>
-            <!-- <span class="new-start-item" @click="showEnd = false"
-                    >重新开始</span
-            >-->
-            <!-- <span class="new-start-item item-last">会话历史记录</span> -->
           </div>
           <div class="search-line">
             <el-input
@@ -202,12 +314,11 @@
             ></el-input
             >&nbsp;&nbsp;
             <span @click="seek2" class="el-icon-s-promotion"></span>
-            <!-- <el-button :disabled="showEnd" type="primary" @click="seek2">询问</el-button> -->
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
-    <!-- <div class="team-bottom">
+<!-- <div class="team-bottom">
             <img style="width: 100vw; height: calc(50vh - 24px);" src="../assets/表格.png" alt="">
     </div>-->
     <div class="team-bottom" v-if="isPC">
@@ -501,7 +612,7 @@ export default {
         mood: yData[1],
       };
       this.opts1 = getLineOption({
-        title: '用户情绪反馈表',
+        title: "用户情绪反馈表",
         type: "line",
         legend: ["标准话术/情绪中值", "情绪波动"],
         yData,
@@ -649,6 +760,10 @@ body {
     }
     .dialog-box-left,
     .dialog-box-right {
+      .zsk {
+        border: 1px solid #ddd;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+      }
       display: flex;
       flex-direction: column;
       background: #fff;
@@ -665,7 +780,6 @@ body {
       }
       .search-line {
         display: flex;
-        padding: 0 16px;
         position: relative;
         .el-icon-s-promotion {
           color: #0e69b6;
@@ -673,7 +787,19 @@ body {
           cursor: pointer;
           transform: translateY(8px);
           position: absolute;
-          left: calc(100% - 64px);
+          right: 20px;
+        }
+        .new-start-item {
+          position: absolute;
+          z-index: 1;
+          right: 50px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: #fff;
+          border: 1px solid #eee;
+          padding: 2px 4px;
+          font-size: 13px;
+          border-radius: 4px;
         }
       }
       .new-start {
@@ -706,7 +832,7 @@ body {
         height: 48px;
         padding-left: 16px;
         line-height: 48px;
-        border-bottom: 1px solid #f0f1f4;
+        // border-bottom: 1px solid #f0f1f4;
       }
       .content {
         height: 72px;
@@ -719,10 +845,9 @@ body {
       }
       .charts {
         flex: 1;
-        transform: translate(20px, 20px);
-      }
-      .el-icon-s-promotion {
-        left: calc(100% - 52px) !important;
+        margin-top: 8px;
+        border: 1px solid #ddd;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
       }
     }
     .dialog-box-right {
@@ -877,6 +1002,260 @@ body {
   th {
     width: 140px;
     font-weight: 400;
+  }
+}
+
+.dialog-box-right {
+  .service-box {
+    height: 100%;
+    display: flex;
+
+    .left-box {
+      flex: 1;
+      padding: 10px 32px 10px 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+
+      .service-title {
+        color: #0a50a9;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+      }
+      .service-content {
+        height: 100%;
+        overflow-y: auto;
+        .service-item {
+          display: flex;
+          align-items: center;
+          &.right {
+            justify-content: flex-end;
+          }
+        }
+        .service-card {
+          max-width: 354px;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid #0a50a9;
+          .card-title {
+            background: #0a50a9;
+            display: flex;
+            height: 38px;
+            padding: 16px 10px;
+            align-items: center;
+            .btn-person {
+              display: flex;
+              height: 24px;
+              padding: 0px 10px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 100px;
+              background: #fff;
+              color: #0a50a9;
+              font-size: 10px;
+              font-weight: 400;
+            }
+          }
+          .card-content {
+            padding: 10px;
+            .btn-ai {
+              display: flex;
+              height: 24px;
+              padding: 0px 10px;
+              max-width: 60px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 100px;
+              background: #0a50a9;
+              color: #fff;
+              font-size: 10px;
+              font-weight: 400;
+            }
+            .desc {
+              margin-top: 9px;
+              color: #333;
+              font-size: 12px;
+              font-weight: 400;
+            }
+          }
+        }
+        .msg-card {
+          width: 100%;
+          margin-top: 54px;
+          display: flex;
+          padding: 10px;
+          flex-direction: column;
+          align-items: flex-start;
+          border-radius: 10px;
+          border: 1px solid #ddd;
+          background: #f2f2f2;
+          .card-title {
+            .btn-name {
+              display: flex;
+              padding: 5px 10px;
+              justify-content: center;
+              align-items: center;
+              color: #0a50a9;
+              font-size: 10px;
+              font-weight: 400;
+              border-radius: 100px;
+              background: #fff;
+            }
+          }
+          .card-content {
+            margin-top: 8px;
+            .desc {
+              color: #333;
+              font-size: 12px;
+              font-weight: 400;
+            }
+          }
+        }
+
+        .finish-card {
+          width: 100%;
+          margin-top: 10px;
+          display: flex;
+          padding: 10px;
+          flex-direction: column;
+          align-items: flex-start;
+          border-radius: 10px;
+          background: #ecf3f9;
+          border: 1px solid #ddd;
+          .card-title {
+            color: #0a50a9;
+            font-size: 12px;
+            font-weight: 400;
+          }
+          .card-content {
+            .desc {
+            }
+          }
+        }
+      }
+    }
+    .right-box {
+      padding-top: 16px;
+      border: 1px solid #ddd;
+      font-size: 10px;
+      background: #ecf3f9;
+      padding-left: 8px;
+      .asideBox {
+        width: 250px;
+        margin-bottom: 40px;
+      }
+    }
+  }
+  .chat-box {
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+
+    .chat-header {
+      padding-right: 10px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+      .chat-body {
+        display: flex;
+        height: 32px;
+        .name-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 80px;
+          border-right: 0.5px solid #ddd;
+          &.active {
+            border-radius: 0px 10px 0px 0px;
+            background: #3a78c8;
+            border-right: 0;
+            color: #fff;
+          }
+          &.hasMsg {
+            position: relative;
+            &::before {
+              display: block;
+              content: "";
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: #e13637;
+              position: absolute;
+              top: 5px;
+              right: 5px;
+            }
+          }
+        }
+      }
+      .chat-body-right {
+        /deep/ .el-select {
+          width: 120px;
+          .el-input__inner {
+            background: #fff;
+            border: 0;
+            color: #0a50a9;
+            font-size: 15px;
+            font-weight: 700;
+          }
+          .el-input .el-select__caret {
+            color: #0e69b6;
+          }
+        }
+        .desc {
+          margin-left: 16px;
+        }
+      }
+    }
+    .chat-content {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      /deep/ .el-input__inner {
+        background: #fff;
+        border: 0;
+      }
+      .el-icon-s-promotion {
+        color: #0e69b6;
+        font-size: 24px;
+        cursor: pointer;
+        margin-right: 28px;
+      }
+      .chat-btn-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        .new-start-item {
+          border-radius: 8px;
+          border: 1px solid #ddd;
+          background: #fff;
+          color: #0a50a9;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          width: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+        .new-chat-item {
+          border-radius: 8px;
+          border: 1px solid #ddd;
+          background: #fff;
+          color: #0a50a9;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          width: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>
