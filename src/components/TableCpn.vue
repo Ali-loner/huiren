@@ -4,15 +4,14 @@
       <div class="lf-1">
         <table width="100%" border="1">
           <tr>
-            <th rowspan="2" colspan="2">用户基本信息 <el-button size="mini" @click="delInfo">reset</el-button> </th>
+            <th rowspan="2" colspan="2">用户基本信息</th>
             <th colspan="2">用户历史对话记录</th>
             <td class="grey" rowspan="2">
-              <div>人工审核修订记录</div>
+              <div class="title">人工审核修订记录</div>
               <div>（时间12:00-12:00）</div>
             </td>
             <th rowspan="2">
-              <div>用户当前对话更新时间</div>
-              <div>（时间12:00-12:00）</div>
+              <div>用户基本信息</div>
             </th>
           </tr>
           <tr>
@@ -20,7 +19,10 @@
             <td class="grey">对话记录2（时间12:00-12:00）</td>
           </tr>
           <tr>
-            <th rowspan="5">联系方式</th>
+            <th rowspan="5">
+              <el-button size="mini" @click="delInfo">Reset</el-button>
+              <div class="contact">联系方式</div>
+            </th>
             <td class="white">姓名</td>
             <td>{{ oldContact1.name }}</td>
             <td>{{ oldContact2.name }}</td>
@@ -499,9 +501,15 @@
               }}
             </td>
           </tr>
+        </table>
+
+        <table width="100%" border="1">
           <tr>
             <td class="grey"></td>
-            <th colspan="14">用户当前动态产品购买与敏感度</th>
+            <th colspan="14">
+              <div>用户历史产品购买与敏感度记录</div>
+              <div>对话记录1（时间12:00-12:00）</div>
+            </th>
           </tr>
           <tr>
             <td class="grey"></td>
@@ -755,6 +763,7 @@
             </td>
           </tr>
         </table>
+
         <div style="display: flex">
           <table class="esp" width="70%" border="1">
             <tr>
@@ -889,10 +898,18 @@
             <td>{{ oldUserAnomalyInfoRecords1.productEffectComplaint }}</td>
             <td>{{ oldUserAnomalyInfoRecords1.deliveryComplaint }}</td>
             <td>{{ oldUserAnomalyInfoRecords1.serviceQualityComplaint }}</td>
-            <td class="yellow">{{ userAnomalyInfoRecords.chatSensitiveWords }}</td>
-            <td class="yellow">{{ userAnomalyInfoRecords.productEffectComplaint }}</td>
-            <td class="yellow">{{ userAnomalyInfoRecords.deliveryComplaint }}</td>
-            <td class="yellow">{{ userAnomalyInfoRecords.serviceQualityComplaint }}</td>
+            <td class="yellow">
+              {{ userAnomalyInfoRecords.chatSensitiveWords }}
+            </td>
+            <td class="yellow">
+              {{ userAnomalyInfoRecords.productEffectComplaint }}
+            </td>
+            <td class="yellow">
+              {{ userAnomalyInfoRecords.deliveryComplaint }}
+            </td>
+            <td class="yellow">
+              {{ userAnomalyInfoRecords.serviceQualityComplaint }}
+            </td>
           </tr>
         </table>
       </div>
@@ -914,8 +931,8 @@ export default {
       return list.find((ele) => ele.productName == name);
     },
     delInfo() {
-      this.$emit('delInfo')
-    }
+      this.$emit("delInfo");
+    },
   },
   computed: {
     contact() {
@@ -1048,9 +1065,9 @@ th {
   font-size: 10px;
   border: 1px solid #dddddd;
 }
- th {
+th {
   font-size: 12px;
- }
+}
 
 // .lf-2 {
 //   td {
@@ -1081,7 +1098,14 @@ tr {
   margin: 8px 48px 0 0;
 }
 img {
-    position: absolute;
-    right: 5vw;
+  position: absolute;
+  right: 5vw;
+}
+.contact {
+  margin-top: 20px;
+}
+.title {
+  font-size: 12px;
+  font-weight: bold;
 }
 </style>
