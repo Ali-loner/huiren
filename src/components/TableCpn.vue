@@ -23,35 +23,35 @@
               <el-button size="mini" @click="delInfo">Reset</el-button>
               <div class="contact">联系方式</div>
             </th>
-            <td class="white">姓名</td>
+            <td class="white text-left">姓名</td>
             <td>{{ oldContact1.name }}</td>
             <td>{{ oldContact2.name }}</td>
             <td></td>
             <td class="yellow">{{ contact.name }}</td>
           </tr>
           <tr>
-            <td class="white">年龄</td>
+            <td class="white text-left">年龄</td>
             <td>{{ oldContact1.age }}</td>
             <td>{{ oldContact2.age }}</td>
             <td></td>
             <td class="yellow">{{ contact.age }}</td>
           </tr>
           <tr>
-            <td class="white">手机号</td>
+            <td class="white text-left">手机号</td>
             <td>{{ oldContact1.phoneNumber }}</td>
             <td>{{ oldContact2.phoneNumber }}</td>
             <td></td>
             <td class="yellow">{{ contact.phoneNumber }}</td>
           </tr>
           <tr>
-            <td class="white">微信号</td>
+            <td class="white text-left">微信号</td>
             <td>{{ oldContact1.wechatId }}</td>
             <td>{{ oldContact2.wechatId }}</td>
             <td></td>
             <td class="yellow">{{ contact.wechatId }}</td>
           </tr>
           <tr>
-            <td class="white">快递地址</td>
+            <td class="white text-left">快递地址</td>
             <td>{{ oldContact1.address }}</td>
             <td>{{ oldContact2.address }}</td>
             <td></td>
@@ -59,7 +59,7 @@
           </tr>
           <tr>
             <th rowspan="14">基础症状</th>
-            <td class="white">汇仁产品适应症状1</td>
+            <td class="white text-left">汇仁产品适应症状1</td>
             <td>{{ oldBasicConditions1.huiRenProductConditions?.[0] }}</td>
             <td>{{ oldBasicConditions2.huiRenProductConditions?.[0] }}</td>
             <td></td>
@@ -68,7 +68,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">汇仁产品适应症状2</td>
+            <td class="white text-left">汇仁产品适应症状2</td>
             <td>{{ oldBasicConditions1.huiRenProductConditions?.[1] }}</td>
             <td>{{ oldBasicConditions2.huiRenProductConditions?.[1] }}</td>
             <td></td>
@@ -77,7 +77,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">汇仁产品适应症状3</td>
+            <td class="white text-left">汇仁产品适应症状3</td>
             <td>{{ oldBasicConditions1.huiRenProductConditions?.[2] }}</td>
             <td>{{ oldBasicConditions2.huiRenProductConditions?.[2] }}</td>
             <td></td>
@@ -86,7 +86,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">汇仁产品适应症状4</td>
+            <td class="white text-left">汇仁产品适应症状4</td>
             <td>{{ oldBasicConditions1.huiRenProductConditions?.[3] }}</td>
             <td>{{ oldBasicConditions2.huiRenProductConditions?.[3] }}</td>
             <td></td>
@@ -95,7 +95,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">汇仁产品适应症状5</td>
+            <td class="white text-left">汇仁产品适应症状5</td>
             <td>{{ oldBasicConditions1.huiRenProductConditions?.[4] }}</td>
             <td>{{ oldBasicConditions2.huiRenProductConditions?.[4] }}</td>
             <td></td>
@@ -104,7 +104,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">非汇仁产品适应症状1</td>
+            <td class="white text-left">非汇仁产品适应症状1</td>
             <td>{{ oldBasicConditions1.nonHuiRenProductConditions?.[0] }}</td>
             <td>{{ oldBasicConditions2.nonHuiRenProductConditions?.[0] }}</td>
             <td></td>
@@ -113,7 +113,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">非汇仁产品适应症状2</td>
+            <td class="white text-left">非汇仁产品适应症状2</td>
             <td>{{ oldBasicConditions1.nonHuiRenProductConditions?.[1] }}</td>
             <td>{{ oldBasicConditions2.nonHuiRenProductConditions?.[1] }}</td>
             <td></td>
@@ -122,7 +122,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">非汇仁产品适应症状3</td>
+            <td class="white text-left">非汇仁产品适应症状3</td>
             <td>{{ oldBasicConditions1.nonHuiRenProductConditions?.[2] }}</td>
             <td>{{ oldBasicConditions2.nonHuiRenProductConditions?.[2] }}</td>
             <td></td>
@@ -131,7 +131,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">非汇仁产品适应症状4</td>
+            <td class="white text-left">非汇仁产品适应症状4</td>
             <td>{{ oldBasicConditions1.nonHuiRenProductConditions?.[3] }}</td>
             <td>{{ oldBasicConditions2.nonHuiRenProductConditions?.[3] }}</td>
             <td></td>
@@ -140,7 +140,7 @@
             </td>
           </tr>
           <tr>
-            <td class="white">非汇仁产品适应症状5</td>
+            <td class="white text-left">非汇仁产品适应症状5</td>
             <td>{{ oldBasicConditions1.nonHuiRenProductConditions?.[4] }}</td>
             <td>{{ oldBasicConditions2.nonHuiRenProductConditions?.[4] }}</td>
             <td></td>
@@ -149,28 +149,28 @@
             </td>
           </tr>
           <tr>
-            <td class="white">禁忌症</td>
+            <td class="white text-left">禁忌症</td>
             <td>{{ oldBasicConditions1.contraindications }}</td>
             <td>{{ oldBasicConditions2.contraindications }}</td>
             <td></td>
             <td class="yellow">{{ basicConditions.contraindications }}</td>
           </tr>
           <tr>
-            <td class="white">血压指标</td>
+            <td class="white text-left">血压指标</td>
             <td>{{ oldBasicConditions1.bloodPressure }}</td>
             <td>{{ oldBasicConditions2.bloodPressure }}</td>
             <td></td>
             <td class="yellow">{{ basicConditions.bloodPressure }}</td>
           </tr>
           <tr>
-            <td class="white">血糖指标</td>
+            <td class="white text-left">血糖指标</td>
             <td>{{ oldBasicConditions1.bloodSugar }}</td>
             <td>{{ oldBasicConditions2.bloodSugar }}</td>
             <td></td>
             <td class="yellow">{{ basicConditions.bloodSugar }}</td>
           </tr>
           <tr>
-            <td class="white">血脂指标</td>
+            <td class="white text-left">血脂指标</td>
             <td>{{ oldBasicConditions1.bloodFat }}</td>
             <td>{{ oldBasicConditions2.bloodFat }}</td>
             <td></td>
@@ -178,56 +178,56 @@
           </tr>
           <tr>
             <th rowspan="8">决策要素</th>
-            <td class="white">婚姻情况</td>
+            <td class="white text-left">婚姻情况</td>
             <td>{{ oldDecisionFactors1.maritalStatus }}</td>
             <td>{{ oldDecisionFactors2.maritalStatus }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.maritalStatus }}</td>
           </tr>
           <tr>
-            <td class="white">职业</td>
+            <td class="white text-left">职业</td>
             <td>{{ oldDecisionFactors1.occupation }}</td>
             <td>{{ oldDecisionFactors2.occupation }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.occupation }}</td>
           </tr>
           <tr>
-            <td class="white">教育情况</td>
+            <td class="white text-left">教育情况</td>
             <td>{{ oldDecisionFactors1.educationLevel }}</td>
             <td>{{ oldDecisionFactors2.educationLevel }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.educationLevel }}</td>
           </tr>
           <tr>
-            <td class="white">购买主体</td>
+            <td class="white text-left">购买主体</td>
             <td>{{ oldDecisionFactors1.purchasingAgent }}</td>
             <td>{{ oldDecisionFactors2.purchasingAgent }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.purchasingAgent }}</td>
           </tr>
           <tr>
-            <td class="white">经济条件</td>
+            <td class="white text-left">经济条件</td>
             <td>{{ oldDecisionFactors1.economicConditions }}</td>
             <td>{{ oldDecisionFactors2.economicConditions }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.economicConditions }}</td>
           </tr>
           <tr>
-            <td class="white">购买影响圈层</td>
+            <td class="white text-left">购买影响圈层</td>
             <td>{{ oldDecisionFactors1.purchasingInfluencers }}</td>
             <td>{{ oldDecisionFactors2.purchasingInfluencers }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.purchasingInfluencers }}</td>
           </tr>
           <tr>
-            <td class="white">智力</td>
+            <td class="white text-left">智力</td>
             <td>{{ oldDecisionFactors1.intelligence }}</td>
             <td>{{ oldDecisionFactors2.intelligence }}</td>
             <td></td>
             <td class="yellow">{{ decisionFactors.intelligence }}</td>
           </tr>
           <tr>
-            <td class="white">性格</td>
+            <td class="white text-left">性格</td>
             <td>{{ oldDecisionFactors1.personality }}</td>
             <td>{{ oldDecisionFactors2.personality }}</td>
             <td></td>
@@ -238,7 +238,7 @@
       <div class="lf-2">
         <table width="100%" border="1">
           <tr>
-            <th colspan="15">
+            <th colspan="15" class="table-title">
               <div>用户历史产品购买与敏感度记录</div>
               <div>对话记录1（时间12:00-12:00）</div>
             </th>
@@ -505,14 +505,13 @@
 
         <table width="100%" border="1">
           <tr>
-            <td class="grey"></td>
-            <th colspan="14">
+            <th colspan="15" class="table-title">
               <div>用户历史产品购买与敏感度记录</div>
               <div>对话记录1（时间12:00-12:00）</div>
             </th>
           </tr>
           <tr>
-            <td class="grey"></td>
+            <td class="grey">产品名</td>
             <td class="grey">产品单价</td>
             <td class="grey">产品数量</td>
             <td class="grey">产品总价</td>
@@ -765,74 +764,94 @@
         </table>
 
         <div style="display: flex">
-          <table class="esp" width="70%" border="1">
-            <tr>
-              <th></th>
-              <th colspan="4">对话记录1（时间12:00-12:00）</th>
-              <th colspan="4">用户当前对话分析（动态更新）</th>
-            </tr>
-            <tr>
-              <th rowspan="2">外挂知识库成功率</th>
-              <th colspan="2">用户问题解答成功</th>
-              <th colspan="2">用户问题解答失败</th>
-              <th colspan="2">用户问题解答成功</th>
-              <th colspan="2">用户问题解答失败</th>
-            </tr>
-            <tr>
-              <td class="grey">内容</td>
-              <td class="grey">次数</td>
-              <td class="grey">内容</td>
-              <td class="grey">次数</td>
-              <td class="grey">内容</td>
-              <td class="grey">次数</td>
-              <td class="grey">内容</td>
-              <td class="grey">次数</td>
-            </tr>
-            <tr>
-              <td class="grey">标准话术节点库</td>
-              <td>{{ oldStandardTechnicalPoints1.success }}</td>
-              <td>{{ oldStandardTechnicalPoints1.successCount }}</td>
-              <td>{{ oldStandardTechnicalPoints1.failure }}</td>
-              <td>{{ oldStandardTechnicalPoints1.failureCount }}</td>
-              <td class="yellow">{{ standardTechnicalPoints.success }}</td>
-              <td class="yellow">{{ standardTechnicalPoints.successCount }}</td>
-              <td class="yellow">{{ standardTechnicalPoints.failure }}</td>
-              <td class="yellow">{{ standardTechnicalPoints.failureCount }}</td>
-            </tr>
-            <tr>
-              <td class="grey">汇仁医学知识</td>
-              <td>{{ oldHuiRenMedicalKnowledge1.success }}</td>
-              <td>{{ oldHuiRenMedicalKnowledge1.successCount }}</td>
-              <td>{{ oldHuiRenMedicalKnowledge1.failure }}</td>
-              <td>{{ oldHuiRenMedicalKnowledge1.failureCount }}</td>
-              <td class="yellow">{{ huiRenMedicalKnowledge.success }}</td>
-              <td class="yellow">{{ huiRenMedicalKnowledge.successCount }}</td>
-              <td class="yellow">{{ huiRenMedicalKnowledge.failure }}</td>
-              <td class="yellow">{{ huiRenMedicalKnowledge.failureCount }}</td>
-            </tr>
-            <tr>
-              <td class="grey">汇仁产品知识</td>
-              <td>{{ oldHuiRenProductKnowledge1.success }}</td>
-              <td>{{ oldHuiRenProductKnowledge1.successCount }}</td>
-              <td>{{ oldHuiRenProductKnowledge1.failure }}</td>
-              <td>{{ oldHuiRenProductKnowledge1.failureCount }}</td>
-              <td class="yellow">{{ huiRenProductKnowledge.success }}</td>
-              <td class="yellow">{{ huiRenProductKnowledge.successCount }}</td>
-              <td class="yellow">{{ huiRenProductKnowledge.failure }}</td>
-              <td class="yellow">{{ huiRenProductKnowledge.failureCount }}</td>
-            </tr>
-            <tr>
-              <td class="grey">汇仁企业知识</td>
-              <td>{{ oldHuiRenCompanyKnowledge1.success }}</td>
-              <td>{{ oldHuiRenCompanyKnowledge1.successCount }}</td>
-              <td>{{ oldHuiRenCompanyKnowledge1.failure }}</td>
-              <td>{{ oldHuiRenCompanyKnowledge1.failureCount }}</td>
-              <td class="yellow">{{ huiRenCompanyKnowledge.success }}</td>
-              <td class="yellow">{{ huiRenCompanyKnowledge.successCount }}</td>
-              <td class="yellow">{{ huiRenCompanyKnowledge.failure }}</td>
-              <td class="yellow">{{ huiRenCompanyKnowledge.failureCount }}</td>
-            </tr>
-            <!-- <tr>
+          <div class="table-two">
+            <table class="esp" border="1">
+              <tr>
+                <th colspan="5" class="table-title">
+                  对话记录1（时间12:00-12:00）
+                </th>
+                <th colspan="4" class="table-title">
+                  用户当前对话分析（动态更新）
+                </th>
+              </tr>
+              <tr>
+                <th rowspan="2">外挂知识库成功率</th>
+                <th colspan="2">用户问题解答成功</th>
+                <th colspan="2">用户问题解答失败</th>
+                <th colspan="2">用户问题解答成功</th>
+                <th colspan="2">用户问题解答失败</th>
+              </tr>
+              <tr>
+                <td class="grey">内容</td>
+                <td class="grey">次数</td>
+                <td class="grey">内容</td>
+                <td class="grey">次数</td>
+                <td class="grey">内容</td>
+                <td class="grey">次数</td>
+                <td class="grey">内容</td>
+                <td class="grey">次数</td>
+              </tr>
+              <tr>
+                <td class="grey">标准话术节点库</td>
+                <td>{{ oldStandardTechnicalPoints1.success }}</td>
+                <td>{{ oldStandardTechnicalPoints1.successCount }}</td>
+                <td>{{ oldStandardTechnicalPoints1.failure }}</td>
+                <td>{{ oldStandardTechnicalPoints1.failureCount }}</td>
+                <td class="yellow">{{ standardTechnicalPoints.success }}</td>
+                <td class="yellow">
+                  {{ standardTechnicalPoints.successCount }}
+                </td>
+                <td class="yellow">{{ standardTechnicalPoints.failure }}</td>
+                <td class="yellow">
+                  {{ standardTechnicalPoints.failureCount }}
+                </td>
+              </tr>
+              <tr>
+                <td class="grey">汇仁医学知识</td>
+                <td>{{ oldHuiRenMedicalKnowledge1.success }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1.successCount }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1.failure }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1.failureCount }}</td>
+                <td class="yellow">{{ huiRenMedicalKnowledge.success }}</td>
+                <td class="yellow">
+                  {{ huiRenMedicalKnowledge.successCount }}
+                </td>
+                <td class="yellow">{{ huiRenMedicalKnowledge.failure }}</td>
+                <td class="yellow">
+                  {{ huiRenMedicalKnowledge.failureCount }}
+                </td>
+              </tr>
+              <tr>
+                <td class="grey">汇仁产品知识</td>
+                <td>{{ oldHuiRenProductKnowledge1.success }}</td>
+                <td>{{ oldHuiRenProductKnowledge1.successCount }}</td>
+                <td>{{ oldHuiRenProductKnowledge1.failure }}</td>
+                <td>{{ oldHuiRenProductKnowledge1.failureCount }}</td>
+                <td class="yellow">{{ huiRenProductKnowledge.success }}</td>
+                <td class="yellow">
+                  {{ huiRenProductKnowledge.successCount }}
+                </td>
+                <td class="yellow">{{ huiRenProductKnowledge.failure }}</td>
+                <td class="yellow">
+                  {{ huiRenProductKnowledge.failureCount }}
+                </td>
+              </tr>
+              <tr>
+                <td class="grey">汇仁企业知识</td>
+                <td>{{ oldHuiRenCompanyKnowledge1.success }}</td>
+                <td>{{ oldHuiRenCompanyKnowledge1.successCount }}</td>
+                <td>{{ oldHuiRenCompanyKnowledge1.failure }}</td>
+                <td>{{ oldHuiRenCompanyKnowledge1.failureCount }}</td>
+                <td class="yellow">{{ huiRenCompanyKnowledge.success }}</td>
+                <td class="yellow">
+                  {{ huiRenCompanyKnowledge.successCount }}
+                </td>
+                <td class="yellow">{{ huiRenCompanyKnowledge.failure }}</td>
+                <td class="yellow">
+                  {{ huiRenCompanyKnowledge.failureCount }}
+                </td>
+              </tr>
+              <!-- <tr>
             <td class="grey">社交闲聊知识</td>
             <td></td>
             <td></td>
@@ -843,7 +862,7 @@
             <td class="yellow"></td>
             <td class="yellow"></td>
           </tr> -->
-            <!-- <tr>
+              <!-- <tr>
               <th rowspan="2">用户异常信息记录</th>
               <td class="grey">闲聊骚扰/敏感词</td>
               <td class="grey">产品效果投诉</td>
@@ -872,46 +891,55 @@
                 {{ userAnomalyInfoRecords.serviceQualityComplaint }}
               </td>
             </tr> -->
-          </table>
-          <img src="../assets/logo.png" alt="" />
+            </table>
+            <table class="esp" border="1" style="margin-top: 6px">
+              <tr>
+                <th colspan="8" class="table-title">
+                  <div>用户异常信息记录</div>
+                </th>
+              </tr>
+              <tr>
+                <th colspan="4">对话记录1（时间12:00-12:00）</th>
+                <th colspan="4">用户当前对话分析（动态更新）</th>
+              </tr>
+              <tr>
+                <td class="grey">闲聊骚扰/敏感词</td>
+                <td class="grey">产品投诉</td>
+                <td class="grey">物流投诉</td>
+                <td class="grey">服务投诉</td>
+                <td class="grey">闲聊骚扰/敏感词</td>
+                <td class="grey">产品投诉</td>
+                <td class="grey">物流投诉</td>
+                <td class="grey">服务投诉</td>
+              </tr>
+              <tr>
+                <td>{{ oldUserAnomalyInfoRecords1.chatSensitiveWords }}</td>
+                <td>{{ oldUserAnomalyInfoRecords1.productEffectComplaint }}</td>
+                <td>{{ oldUserAnomalyInfoRecords1.deliveryComplaint }}</td>
+                <td>
+                  {{ oldUserAnomalyInfoRecords1.serviceQualityComplaint }}
+                </td>
+                <td class="yellow">
+                  {{ userAnomalyInfoRecords.chatSensitiveWords }}
+                </td>
+                <td class="yellow">
+                  {{ userAnomalyInfoRecords.productEffectComplaint }}
+                </td>
+                <td class="yellow">
+                  {{ userAnomalyInfoRecords.deliveryComplaint }}
+                </td>
+                <td class="yellow">
+                  {{ userAnomalyInfoRecords.serviceQualityComplaint }}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <img
+            style="width: 300px; height: 210px"
+            src="../assets/logo.png"
+            alt=""
+          />
         </div>
-        <table border="1" width="70%">
-          <tr>
-            <th colspan="8">用户异常信息记录</th>
-          </tr>
-          <tr>
-            <th colspan="4">对话记录1（时间12:00-12:00）</th>
-            <th colspan="4">用户当前对话分析（动态更新）</th>
-          </tr>
-          <tr>
-            <td class="grey">闲聊骚扰/敏感词</td>
-            <td class="grey">产品投诉</td>
-            <td class="grey">物流投诉</td>
-            <td class="grey">服务投诉</td>
-            <td class="grey">闲聊骚扰/敏感词</td>
-            <td class="grey">产品投诉</td>
-            <td class="grey">物流投诉</td>
-            <td class="grey">服务投诉</td>
-          </tr>
-          <tr>
-            <td>{{ oldUserAnomalyInfoRecords1.chatSensitiveWords }}</td>
-            <td>{{ oldUserAnomalyInfoRecords1.productEffectComplaint }}</td>
-            <td>{{ oldUserAnomalyInfoRecords1.deliveryComplaint }}</td>
-            <td>{{ oldUserAnomalyInfoRecords1.serviceQualityComplaint }}</td>
-            <td class="yellow">
-              {{ userAnomalyInfoRecords.chatSensitiveWords }}
-            </td>
-            <td class="yellow">
-              {{ userAnomalyInfoRecords.productEffectComplaint }}
-            </td>
-            <td class="yellow">
-              {{ userAnomalyInfoRecords.deliveryComplaint }}
-            </td>
-            <td class="yellow">
-              {{ userAnomalyInfoRecords.serviceQualityComplaint }}
-            </td>
-          </tr>
-        </table>
       </div>
     </div>
     <!-- {{ userInfo }}
@@ -1039,6 +1067,7 @@ export default {
 <style lang="less" scoped>
 table {
   // transform: scaleY(0.9);
+  box-shadow: 0px 6px 4px 0px #ddd;
   transform-origin: 0 0;
   max-height: 50vh;
   .grey,
@@ -1080,6 +1109,7 @@ th {
 .table-box {
   background: #f2f5f6;
   display: flex;
+  padding-bottom: 20px;
   .lf-1 {
     flex: 42;
   }
@@ -1094,18 +1124,31 @@ th {
 tr {
   height: 20px;
 }
-.esp {
-  margin: 8px 48px 0 0;
+.table-two {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 10px;
+  .esp {
+    width: 100%;
+    box-shadow: 0px 6px 4px 0px #ddd;
+  }
 }
-img {
-  position: absolute;
-  right: 5vw;
-}
+
 .contact {
   margin-top: 20px;
 }
 .title {
   font-size: 12px;
   font-weight: bold;
+}
+.text-left {
+  text-align: left;
+  padding-left: 24px;
+}
+.table-title {
+  height: 44px;
+  background-color: #eaecf0;
 }
 </style>

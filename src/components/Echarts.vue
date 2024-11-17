@@ -37,8 +37,10 @@ export default {
     }
   },
   mounted() {
+    console.log("this.option===ddd",this.option);
+    this.renderInit();
     this.$nextTick(function() {
-      this.renderInit();
+      
     });
   },
 
@@ -66,6 +68,7 @@ export default {
       if (this.echs == null) {
         this.echs = echarts.init(this.$refs[this.id + "Canvas"]);
       }
+      console.log("this.option===",this.option);
       this.echs.setOption(this.option, true);
       this.echs.off("click");
       this.echs.on("datazoom", params => {
