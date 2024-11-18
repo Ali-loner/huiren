@@ -47,7 +47,6 @@
           <div class="charts">
             <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
-            
           </div>
           <div>
             <!-- <div style="padding: 0 48px 8px 48px"> -->
@@ -85,10 +84,10 @@
         </div>
 
         <div class="dialog-box-right">
+          <div class="service-title">客服交互</div>
+
           <div class="service-box">
             <div class="left-box">
-              <div class="service-title">客服交互</div>
-
               <div class="service-content">
                 <div class="service-item right">
                   <div class="service-card">
@@ -1044,24 +1043,30 @@ body {
 .dialog-box-right {
   overflow-y: auto;
   box-shadow: 0px 6px 4px 0px #ddd;
+  border: 1px solid #ddd;
+
+  .service-title {
+    color: #0a50a9;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    background: #fff;
+    padding: 6px 10px;
+  }
   .service-box {
     height: 100%;
     display: flex;
+    overflow-y: auto;
+    background: #fff;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+
     .left-box {
       flex: 1;
       padding: 10px 32px 10px 10px;
-      border: 1px solid #ddd;
       background: #fff;
 
-      .service-title {
-        color: #0a50a9;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 700;
-      }
       .service-content {
-        height: calc(100% - 25px);
-        overflow-y: auto;
         .service-item {
           display: flex;
           align-items: center;
@@ -1074,6 +1079,7 @@ body {
           border-radius: 8px;
           overflow: hidden;
           border: 1px solid #0a50a9;
+          margin-bottom: 30px;
           .card-title {
             background: #0a50a9;
             display: flex;
@@ -1118,7 +1124,7 @@ body {
         }
         .msg-card {
           width: 100%;
-          margin-top: 54px;
+          margin: 20px 0;
           display: flex;
           padding: 10px;
           flex-direction: column;
@@ -1151,7 +1157,7 @@ body {
 
         .finish-card {
           width: 100%;
-          margin-top: 10px;
+          margin: 10px 0;
           display: flex;
           padding: 10px;
           flex-direction: column;
@@ -1172,14 +1178,14 @@ body {
       }
     }
     .right-box {
-      padding-top: 35px;
+      padding-top: 10px;
       border: 1px solid #ddd;
       font-size: 10px;
       background: #ecf3f9;
       padding-left: 8px;
       .asideBox {
         width: 250px;
-        margin-bottom: 90px;
+        margin-bottom: 85px;
       }
     }
   }
@@ -1228,7 +1234,7 @@ body {
       }
       .chat-body-right {
         /deep/ .el-select {
-          width: 120px;
+          width: 140px;
           .el-input__inner {
             background: #fff;
             border: 0;
@@ -1277,6 +1283,10 @@ body {
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          &:hover {
+            background-color: #0e69b6;
+            color: #fff;
+          }
         }
         .new-chat-item {
           border-radius: 8px;
@@ -1291,6 +1301,10 @@ body {
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          &:hover {
+            background-color: #0e69b6;
+            color: #fff;
+          }
         }
       }
     }

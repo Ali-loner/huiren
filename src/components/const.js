@@ -345,7 +345,7 @@ export const getLineOption = (option = {}) => {
     },
     yAxis: {
       type: "value",
-      // interval: 0.5, // 设置刻度
+      interval: 0.5, // 设置刻度
     },
     series: [
       {

@@ -11,7 +11,8 @@
               <div>（时间12:00-12:00）</div>
             </td>
             <th rowspan="2">
-              <div>用户基本信息</div>
+              <div>用户当前对话更新时间</div>
+              <div>（时间12:00-12:00）</div>
             </th>
           </tr>
           <tr>
@@ -1150,5 +1151,7 @@ tr {
 .table-title {
   height: 44px;
   background-color: #eaecf0;
+  // border-bottom: 1px solid #ddd;
+  box-shadow: 0px 6px 4px 0px #ddd;
 }
 </style>

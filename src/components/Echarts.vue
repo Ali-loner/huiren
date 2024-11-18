@@ -129,7 +129,8 @@ export default {
 
 .chart-box {
   width: 100%;
-  height: 250px;
+  height: 100%;
+  /* height: 250px; */
   position: relative;
 }
 
@@ -149,6 +150,7 @@ th {
 
 .chart-table{
   position: absolute;
-  bottom: -20px;
+  bottom: 0;
+  left: 5%;
 }
 </style>
