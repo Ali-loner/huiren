@@ -318,11 +318,12 @@ export const opts2 = {
 
 export const getLineOption = (option = {}) => {
   let options = {
+    color: ["#0a50a9", "#000", "orange"],
     title: {
       text: option.title,
-      textStyle:{
-        fontSize: 12
-      }
+      textStyle: {
+        fontSize: 12,
+      },
     },
     tooltip: {
       trigger: "axis",
@@ -337,38 +338,40 @@ export const getLineOption = (option = {}) => {
       data: option.legend,
     },
     xAxis: {
+      show: false,
       type: "category",
       //   data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       data: option.xData,
     },
     yAxis: {
       type: "value",
+      // interval: 0.5, // 设置刻度
     },
     series: [
       {
         // data: [50, 30, 24, 218, 135, 147, 260],
         data: option.yData?.[0],
-        type:option.type,
-        lineStyle:{
-          width: 5
+        type: option.type,
+        lineStyle: {
+          width: 3,
         },
-        name:option.legend?.[0],
+        name: option.legend?.[0],
       },
       {
         // data: [350, 130, 224, 418, 35, 107, 160],
         data: option.yData?.[1],
-        type:option.type,
-        lineStyle:{
-          width: 5
+        type: option.type,
+        lineStyle: {
+          width: 3,
         },
         name: option.legend?.[1],
       },
       {
         // data: [10, 330, 124, 198, 199, 14, 60],
         data: option.yData?.[2],
-        type:option.type,
-        lineStyle:{
-          width: 5
+        type: option.type,
+        lineStyle: {
+          width: 3,
         },
         name: option.legend?.[2],
       },

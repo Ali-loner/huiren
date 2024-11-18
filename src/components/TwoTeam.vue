@@ -29,10 +29,9 @@
                 suffix-icon
                 placeholder="请输入您想问的..."
                 v-model.trim="dialog1"
+                @change="seek1"
               ></el-input>
-              <span class="new-start-item" @click="restartDialog"
-                >New Chat</span
-              >
+
               <img
                 @click="seek1"
                 class="send-btn"
@@ -40,11 +39,15 @@
                 alt=""
                 srcset=""
               />
+              <span class="new-start-item" @click="restartDialog"
+                >New Chat</span
+              >
             </div>
           </div>
           <div class="charts">
             <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
+            
           </div>
           <div>
             <!-- <div style="padding: 0 48px 8px 48px"> -->
@@ -202,8 +205,15 @@
                 suffix-icon
                 placeholder="当前您正在模拟人类用户，在此发言"
                 v-model.trim="dialog1"
+                @change="seek1"
               ></el-input>
-              <span @click="seek1" class="el-icon-s-promotion"></span>
+              <img
+                @click="seek1"
+                class="el-icon-s-promotion"
+                src="@/assets/send.jpg"
+                alt=""
+                srcset=""
+              />
 
               <div class="chat-btn-box">
                 <span class="new-start-item" @click="restartDialog">挂机</span>
@@ -445,6 +455,7 @@ export default {
       this.clientWidth = window.innerWidth;
     },
     seek1() {
+      console.log("this.dialog1===", this.dialog1);
       return;
       if (!this.dialog1) {
         this.$message.error("请输入对话内容");
@@ -623,11 +634,24 @@ export default {
         type: "line",
         legend: ["当前对话", "标准话术/情绪中值", "情绪波动"],
         yData: [
-          [120, 132, 101, 134, 90, 230, 210],
-          [220, 182, 191, 234, 290, 330, 310],
-          [150, 232, 201, 154, 190, 330, 410],
+          [7, 6, 5.5, 5, 6, 5, 8, 6, 9, 5, 7, 8],
+          [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+          [5, 5, 5, 7, 8, 6, 7, 6, 5, 5, 4, 3],
         ],
-        xData: ["R1", "R2", "R3", "R4", "R5", "R6", "R7"],
+        xData: [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8",
+          "R9",
+          "R10",
+          "R11",
+          "R12",
+        ],
       });
       // this.opts2 = getLineOption({
       //   title: "五虎上将",
@@ -796,13 +820,22 @@ body {
         .send-btn {
           width: 32px;
           height: 32px;
+          margin-right: 10px;
+          cursor: pointer;
         }
         .new-start-item {
+          border-radius: 8px;
+          border: 1px solid #ddd;
           background: #fff;
-          border: 1px solid #eee;
-          padding: 2px 4px;
-          font-size: 13px;
-          border-radius: 4px;
+          color: #0a50a9;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          width: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
         }
       }
       .new-start {
@@ -1139,14 +1172,14 @@ body {
       }
     }
     .right-box {
-      padding-top: 16px;
+      padding-top: 35px;
       border: 1px solid #ddd;
       font-size: 10px;
       background: #ecf3f9;
       padding-left: 8px;
       .asideBox {
         width: 250px;
-        margin-bottom: 110px;
+        margin-bottom: 90px;
       }
     }
   }
@@ -1221,10 +1254,10 @@ body {
         border: 0;
       }
       .el-icon-s-promotion {
-        color: #0e69b6;
-        font-size: 24px;
         cursor: pointer;
         margin-right: 28px;
+        width: 32px;
+        height: 32px;
       }
       .chat-btn-box {
         display: flex;

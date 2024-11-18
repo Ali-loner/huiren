@@ -1,6 +1,24 @@
 <template>
   <div @click="clickDom" ref="chartsBox" class="chart-box">
     <div class="main" :id="id" :ref="id + 'Canvas'"></div>
+    <table class="chart-table">
+      <tr>
+        <th></th>
+        <th width="50px" v-for="item in 12" :key="item">R{{ item }}</th>
+      </tr>
+      <tr v-for="(item, index) in option.series" :key="index">
+        <td>
+          {{
+            index === 0
+              ? "当前对话"
+              : index === 1
+              ? "标准话术/情绪中值"
+              : "情绪波动"
+          }}
+        </td>
+        <td  v-for="sub in item.data" :key="sub">{{ sub }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -11,37 +29,35 @@ export default {
   props: {
     id: {
       type: String,
-      default: "main"
+      default: "main",
     },
     option: Object,
     handler: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
       echs: "",
       isClickDom: false,
-      t: null
+      t: null,
     };
   },
   watch: {
     option: {
       handler() {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.renderInit();
         });
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
-    console.log("this.option===ddd",this.option);
+    console.log("this.option===ddd", this.option);
     this.renderInit();
-    this.$nextTick(function() {
-      
-    });
+    this.$nextTick(function () {});
   },
 
   beforeDestroy() {
@@ -68,23 +84,23 @@ export default {
       if (this.echs == null) {
         this.echs = echarts.init(this.$refs[this.id + "Canvas"]);
       }
-      console.log("this.option===",this.option);
+      console.log("this.option===", this.option);
       this.echs.setOption(this.option, true);
       this.echs.off("click");
-      this.echs.on("datazoom", params => {
-        if(params?.batch?.[0]?.end == 100) {
+      this.echs.on("datazoom", (params) => {
+        if (params?.batch?.[0]?.end == 100) {
           this.debunce(() => {
             this.$emit("changeDataZoom");
           }, 1000)();
         }
       });
-      this.echs.on("click", params => {
+      this.echs.on("click", (params) => {
         this.isClickDom = true;
         this.$emit("nodeClick", [params, echarts, this.id]);
       });
 
       this.echs.off("mouseover");
-      this.echs.on("mouseover", params => {
+      this.echs.on("mouseover", (params) => {
         this.$emit("nodeMouseOver", [params, echarts, this.id]);
       });
       this.echs.off("mouseout");
@@ -101,8 +117,8 @@ export default {
       setTimeout(() => {
         this.echs.resize();
       }, 500);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -113,11 +129,26 @@ export default {
 
 .chart-box {
   width: 100%;
-  height: 100%;
+  height: 250px;
+  position: relative;
 }
 
 .main {
   width: 100%;
   height: 100%;
+}
+.chart-table,
+tr,
+td,
+th {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 10px;
+  border: 1px solid rgb(184, 182, 182);
+}
+
+.chart-table{
+  position: absolute;
+  bottom: -20px;
 }
 </style>
