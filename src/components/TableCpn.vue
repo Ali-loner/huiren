@@ -239,9 +239,11 @@
       <div class="lf-2">
         <table width="100%" border="1">
           <tr>
-            <th colspan="15" class="table-title">
-              <div>用户历史产品购买与敏感度记录</div>
-              <div>对话记录1（时间12:00-12:00）</div>
+            <th colspan="15">
+              <div class="table-title">
+                <div>用户历史产品购买与敏感度记录</div>
+                <div>对话记录1（时间12:00-12:00）</div>
+              </div>
             </th>
           </tr>
           <tr>
@@ -506,9 +508,11 @@
 
         <table width="100%" border="1">
           <tr>
-            <th colspan="15" class="table-title">
-              <div>用户历史产品购买与敏感度记录</div>
-              <div>对话记录1（时间12:00-12:00）</div>
+            <th colspan="15">
+              <div class="table-title">
+                <div>用户历史产品购买与敏感度记录</div>
+                <div>对话记录1（时间12:00-12:00）</div>
+              </div>
             </th>
           </tr>
           <tr>
@@ -768,11 +772,11 @@
           <div class="table-two">
             <table class="esp" border="1">
               <tr>
-                <th colspan="5" class="table-title">
-                  对话记录1（时间12:00-12:00）
+                <th colspan="5">
+                  <div class="table-title">对话记录1（时间12:00-12:00）</div>
                 </th>
-                <th colspan="4" class="table-title">
-                  用户当前对话分析（动态更新）
+                <th colspan="4">
+                  <div class="table-title">用户当前对话分析（动态更新）</div>
                 </th>
               </tr>
               <tr>
@@ -895,8 +899,10 @@
             </table>
             <table class="esp" border="1" style="margin-top: 6px">
               <tr>
-                <th colspan="8" class="table-title">
-                  <div>用户异常信息记录</div>
+                <th colspan="8">
+                  <div class="table-title">
+                    <div>用户异常信息记录</div>
+                  </div>
                 </th>
               </tr>
               <tr>
@@ -1151,7 +1157,10 @@ tr {
 .table-title {
   height: 44px;
   background-color: #eaecf0;
-  // border-bottom: 1px solid #ddd;
   box-shadow: 0px 6px 4px 0px #ddd;
+  margin: -1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
