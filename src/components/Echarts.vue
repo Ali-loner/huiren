@@ -132,6 +132,7 @@ export default {
   height: 100%;
   /* height: 250px; */
   position: relative;
+  background: #fff;
 }
 
 .main {

@@ -1157,8 +1157,8 @@ tr {
 .table-title {
   height: 44px;
   background-color: #eaecf0;
-  box-shadow: 0px 6px 4px 0px #ddd;
-  margin: -1px;
+  box-shadow: 6px 6px 4px 0px #ddd;
+  margin: -1px -1px 1px -1px;
   display: flex;
   flex-direction: column;
   justify-content: center;
