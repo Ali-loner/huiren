@@ -57,7 +57,6 @@ export default {
   mounted() {
     console.log("this.option===ddd", this.option);
     this.renderInit();
-    this.$nextTick(function () {});
   },
 
   beforeDestroy() {

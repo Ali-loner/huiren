@@ -48,8 +48,7 @@
             <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
           </div>
-          <div>
-            <!-- <div style="padding: 0 48px 8px 48px"> -->
+          <!-- <div>
             <table v-if="chartTableData.part.length" border="1" width="100%">
               <tr>
                 <th>对话回合</th>
@@ -57,16 +56,7 @@
                   {{ item }}
                 </td>
               </tr>
-              <!-- <tr>
-                <th>当前对话</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>5</td>
-              </tr>-->
+
               <tr>
                 <th>标准话术/情绪中值</th>
                 <td v-for="(item, index) in chartTableData.verger" :key="index">
@@ -80,91 +70,101 @@
                 </td>
               </tr>
             </table>
-          </div>
+          </div> -->
         </div>
 
         <div class="dialog-box-right">
           <div class="service-title">客服交互</div>
 
-          <div class="service-box">
-            <div class="left-box">
-              <div class="service-content">
-                <div class="service-item right">
-                  <div class="service-card">
-                    <div class="card-title">
-                      <div class="btn-person">人类客服</div>
-                    </div>
-                    <div class="card-content">
-                      <div class="btn-ai">AI客服</div>
-                      <div class="desc">
-                        您好，汇仁药业客服中心，请问有什么可以帮您？
+          <div id="dialogBox" class="service-box">
+            <div class="item" v-for="(item, index) in messageList" :key="index">
+              <div class="left-box">
+                <div class="service-content">
+                  <div class="service-item">
+                    <div class="msg-card">
+                      <div class="card-title">
+                        <div class="btn-name">孙先生</div>
+                      </div>
+                      <div class="card-content">
+                        <div class="desc">{{ item.yonghu }}</div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="service-item">
-                  <div class="msg-card">
-                    <div class="card-title">
-                      <div class="btn-name">孙先生</div>
-                    </div>
-                    <div class="card-content">
-                      <div class="desc">我要购买你们的产品</div>
+                  <div
+                    class="service-item right"
+                    :style="{ visibility: item.user ? 'visible' : 'hidden' }"
+                  >
+                    <div class="service-card">
+                      <div class="card-title">
+                        <div class="btn-person">人类客服</div>
+                      </div>
+                      <div class="card-content">
+                        <div class="btn-ai">AI客服</div>
+                        <div class="desc">
+                          {{ item.user }}
+                          <!-- 您好，汇仁药业客服中心，请问有什么可以帮您？ -->
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="service-item">
-                  <div class="finish-card">
-                    <div class="card-title">
-                      本轮对话已结束，以下是对本次对话的整体评价：
-                    </div>
-                    <div class="card-content">
-                      <div class="desc">
-                        此处为本次圣诞的整体评价详情信息...
+                  <div v-if="showEnd" class="service-item">
+                    <div class="finish-card">
+                      <div class="card-title">
+                        本轮对话已结束，以下是对本次对话的整体评价：
+                      </div>
+                      <div class="card-content">
+                        <div class="desc">
+                          此处为本次圣诞的整体评价详情信息...
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="right-box">
-              <div class="asideBox">
-                <div>
-                  <span>客服会话</span>
-                  <span>【 R3】</span>
+              <div class="right-box" v-if="isPC && item?.chartDetail">
+                <div class="asideBox">
+                  <div>
+                    <span>客服会话</span>
+                    <span>【 R{{ index + 1 }}】</span>
+                  </div>
+                  <div>
+                    <span>ID：</span>
+                    <span>【{{ item?.chartDetail?.subInputId }}】</span>
+                    <!-- <span>【呼进买药-购买意图未知- BR1】</span> -->
+                  </div>
+                  <div>
+                    <span>知识库引用来源：</span>
+                    <!-- <span>【UMB V10 标准话术】</span> -->
+                    <span>【{{ item?.chartDetail?.kl?.[0] }}】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐得分</span>
+                    <span>【85%】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐总分</span>
+                    <span>【70%】</span>
+                  </div>
                 </div>
-                <div>
-                  <span>ID：</span>
-                  <span>【呼进买药-购买意图未知- BR1】</span>
-                </div>
-                <div>
-                  <span>知识库引用来源：</span>
-                  <span>【UMB V10 标准话术】</span>
-                </div>
-                <div>
-                  <span>话术对齐得分</span>
-                  <span>【85%】</span>
-                </div>
-                <div>
-                  <span>话术对齐总分</span>
-                  <span>【70%】</span>
-                </div>
-              </div>
-              <div class="asideBox">
-                <div>
-                  <span>用户意图识别</span>
-                </div>
-                <div>
-                  <span>ID：</span>
-                  <span>【呼进买药--购买意图未知-BR1】</span>
-                </div>
-                <div>
-                  <span>用户情绪识别 ：</span>
-                  <span>【中性】</span>
-                </div>
-                <div>
-                  <span>话术对齐总分：</span>
-                  <span>【70%】</span>
+                <div class="asideBox">
+                  <div>
+                    <span>用户意图识别</span>
+                  </div>
+                  <div>
+                    <span>ID：</span>
+                    <!-- <span>【呼进买药--购买意图未知-BR1】</span> -->
+                    <span>{{ item?.chartDetail?.subInputId }}</span>
+                  </div>
+                  <div>
+                    <span>用户情绪识别 ：</span>
+                    <!-- <span>【中性】</span> -->
+                    <span>{{ item?.chartDetail?.decisionMood }}</span>
+                  </div>
+                  <div>
+                    <span>话术对齐总分：</span>
+                    <span>【70%】</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -200,14 +200,21 @@
               </div>
             </div>
             <div class="chat-content">
+              <!-- placeholder="当前您正在模拟人类用户，在此发言" -->
               <el-input
+                :disabled="showEnd"
                 suffix-icon
-                placeholder="当前您正在模拟人类用户，在此发言"
-                v-model.trim="dialog1"
-                @change="seek1"
+                :placeholder="
+                  switchValue == 'user'
+                    ? '你是用户，请在这里咨询AI客服相关问题'
+                    : '你是一位客服人员，请在这里回复AI用户的问题'
+                "
+                v-model.trim="dialog2"
+                @keyup.native.enter="seek2"
               ></el-input>
+
               <img
-                @click="seek1"
+                @click="seek2"
                 class="el-icon-s-promotion"
                 src="@/assets/send.jpg"
                 alt=""
@@ -215,128 +222,17 @@
               />
 
               <div class="chat-btn-box">
-                <span class="new-start-item" @click="restartDialog">挂机</span>
+                <span class="new-start-item" @click="stopDialog">挂机</span>
                 <span class="new-chat-item" @click="restartDialog"
                   >New Chat</span
                 >
               </div>
             </div>
           </div>
-
-          <!-- <div class="header">
-            <el-select size="mini" v-model="gptValue" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <span class="title">ChatGPT 4o</span>
-
-            <span class="desc">客服/用户切换</span>
-            <el-switch
-              active-value="user"
-              inactive-value="person"
-              v-model="switchValue"
-              active-color="#eee"
-              inactive-color="#eee"
-              disabled
-            ></el-switch>
-           
-          </div>
-          <div id="dialogBox" class="content">
-            <div class="content-l">
-              <div
-                v-for="(item, index) in messageList"
-                :key="index"
-                class="dialog-item"
-              >
-                <div class="left">
-                  <div class="user">
-                    <div>AI用户</div>
-                    <span>{{ item.yonghu }}</span>
-                  </div>
-                </div>
-                <div
-                  class="right"
-                  :style="{ visibility: item.user ? 'visible' : 'hidden' }"
-                >
-                  <div class="right-item">
-                    <div class="person">
-                      <div>人类客服</div>
-                    </div>
-                    <div class="ai">
-                      <div>AI客服</div>
-                      <span>{{ item.user }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="isPC && item.chartDetail" class="asideBox">
-                  <div>
-                    <span>客服会话：</span>
-                    <span>【 R {{ index + 1 }} 】</span>
-                  </div>
-                  <div>
-                    <span>ID：</span>
-                    <span>{{ item.chartDetail.subInputId }}</span>
-                  </div>
-                  <div>
-                    <span>知识库引用来源：</span>
-                    <span>{{ item.chartDetail.kl?.[0] }}</span>
-                  </div>
-                  <div>
-                    <span>话术对齐得分：</span>
-                    <span>【85%】</span>
-                  </div>
-                  <div>
-                    <span>话术对齐总分：</span>
-                    <span>【70%】</span>
-                  </div>
-                  <br />
-                  <div>
-                    <span>用户意图识别 ID：</span>
-                    <span>{{ item.chartDetail.subInputId }}</span>
-                  </div>
-                  <div>
-                    <span>用户情绪识别：</span>
-                    <span>{{ item.chartDetail.decisionMood }}</span>
-                  </div>
-                </div>
-              </div>
-              <div v-if="showEnd" class="dialog-end">
-                <div class="main">
-                  本轮对话已结束，以下是对本次对话的整体评价
-                </div>
-                <div class="desc">此处为本次圣诞的整体评价详情信息...</div>
-              </div>
-            </div>
-            <div v-if="isPC" class="content-r"></div>
-          </div>
-          <div class="new-start">
-            <span class="new-start-item" @click="restartDialog">New Chat</span>
-            <span class="new-start-item" @click="stopDialog">挂 机</span>
-          </div>
-          <div class="search-line">
-            <el-input
-              :disabled="showEnd"
-              :placeholder="
-                switchValue == 'user'
-                  ? '你是用户，请在这里咨询AI客服相关问题'
-                  : '你是一位客服人员，请在这里回复AI用户的问题'
-              "
-              v-model.trim="dialog2"
-              suffix-icon
-            ></el-input
-            >&nbsp;&nbsp;
-            <span @click="seek2" class="el-icon-s-promotion"></span>
-          </div> -->
         </div>
       </div>
     </div>
-    <!-- <div class="team-bottom">
-            <img style="width: 100vw; height: calc(50vh - 24px);" src="../assets/表格.png" alt="">
-    </div>-->
+
     <div class="team-bottom" v-if="isPC">
       <TableCpn
         @delInfo="delInfo"
@@ -379,14 +275,17 @@ export default {
       window.addEventListener("resize", this.handleResize);
       this.clientWidth = window.innerWidth;
       this.getRandomId();
+      this.getAppKey();
     });
   },
   data() {
     return {
       clientWidth: 1200,
+      appKey: "app-58sD2jpcITCjVZaiwPU3ZTXG",
       dialog1: "",
       dialog1Copy: [],
       dialog2: "",
+      dialog2Copy: "",
       options: [
         {
           value: "ChatGPT4.0",
@@ -423,6 +322,19 @@ export default {
     };
   },
   methods: {
+    getAppKey() {
+      let that = this;
+      this.$axios
+        .get("http://47.100.51.224:8080/api/config/dify")
+        .then(function (res) {
+          if (res.status == 200) {
+            that.appKey = res.data?.appSecret || "app-58sD2jpcITCjVZaiwPU3ZTXG";
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
     getRandomId() {
       const userList = [
         "a5695fd5-f84b-45f1-9c61-12d33ada2bc7",
@@ -475,10 +387,12 @@ export default {
         return;
       }
       if (this.switchValue == "user") {
+        this.dialog2Copy = this.dialog2;
         this.messageList.push({
-          yonghu: this.dialog2,
+          yonghu: this.dialog2Copy,
         });
         this.sendChatAjax();
+        this.dialog2 = "";
       } else {
         this.messageList.push({
           person: this.dialog2,
@@ -503,16 +417,16 @@ export default {
     },
     sendChatAjax() {
       var that = this;
-      const { conversation_id, dialog2 } = this;
+      const { conversation_id, dialog2Copy, appKey } = this;
       this.$axios({
         method: "POST",
         headers: {
-          authorization: "Bearer app-qMOb4h7wmCSfcMRkXclDGPGA",
+          authorization: "Bearer " + appKey,
         },
         url: "http://47.100.51.224/v1/chat-messages",
         data: {
           inputs: {},
-          query: dialog2,
+          query: dialog2Copy,
           response_mode: "blocking",
           conversation_id,
           user: that.randomId,
@@ -915,96 +829,6 @@ body {
         overflow-y: scroll;
         padding: 0 40px 40px 20px;
         font-size: 12px;
-        .dialog-end {
-          margin-top: 20px;
-          border-radius: 10px;
-          background: #edf5f8;
-          padding: 20px;
-          .main,
-          .desc {
-            margin-bottom: 8px;
-          }
-          .main {
-            color: #206ccf;
-            font-weight: 900;
-            font-size: 14px;
-          }
-          .desc {
-            font-size: 12px;
-          }
-        }
-        .dialog-item {
-          padding: 20px 0 20px 20px;
-          border-bottom: 1px dotted #c9cdd4; // overflow: hidden;
-          position: relative;
-          .asideBox {
-            position: absolute;
-            top: 0;
-            background: #eef3f9;
-            width: 33%;
-            height: 100%;
-            right: 0;
-            transform: translateX(100%);
-            padding: 20px;
-            margin-bottom: 8px;
-          }
-          .right {
-            overflow: hidden;
-            .right-item {
-              max-width: 260px;
-              margin-top: 16px;
-              float: right; //   margin-right: 40px;
-              //   .el-tag {
-              //     margin: 8px 0;
-              //   }
-              border-radius: 10px;
-              border: 1px solid #0a50a9;
-              overflow: hidden;
-              margin-right: 32px;
-              .person {
-                background: #0a50a9;
-                padding: 16px 10px;
-                div {
-                  width: fit-content;
-                  padding: 5px 10px;
-                  background: #fff;
-                  border-radius: 20px;
-                  color: #0a50a9;
-                  margin-bottom: 10px;
-                }
-              }
-              .ai {
-                padding: 16px 10px;
-                div {
-                  width: fit-content;
-                  padding: 5px 10px;
-                  background: #0a50a9;
-                  border-radius: 20px;
-                  color: #fff;
-                  margin-bottom: 10px;
-                }
-              }
-            }
-          }
-          .left {
-            overflow: hidden;
-            .user {
-              float: left;
-              width: 200px;
-              border-radius: 10px;
-              background: #f2f2f2;
-              padding: 10px;
-              div {
-                width: fit-content;
-                padding: 5px 10px;
-                background: #fff;
-                border-radius: 20px;
-                color: #0a50a9;
-                margin-bottom: 10px;
-              }
-            }
-          }
-        }
         display: flex;
         .content-l {
           flex: 3;
@@ -1056,14 +880,17 @@ body {
   }
   .service-box {
     height: 100%;
-    display: flex;
+
     overflow-y: auto;
     background: #fff;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
+    .item {
+      display: flex;
+    }
 
     .left-box {
-      flex: 1;
+      width: calc(100% - 250px);
       padding: 10px 32px 10px 10px;
       background: #fff;
 
