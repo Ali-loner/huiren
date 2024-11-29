@@ -13,87 +13,55 @@
           <div class="zsk">
             <div class="title">知识库问答</div>
             <div id="zskBox" class="content">
-              <div v-for="(item, index) in dialog1Copy" :key="index">
+              <div v-for="(item, index) in msgKnowList" :key="index">
                 <div class="zsk-item">
                   <div class="fl-r desc msg msg-right">{{ item }}</div>
                 </div>
               </div>
             </div>
-            <!-- <div class="new-start">
-                    <span class="new-start-item">重新开始</span>
-            </div>-->
             <div class="search-line">
-              <!-- <el-input placeholder="请输入您想问的" v-model.trim="dialog1"></el-input>&nbsp;&nbsp;
-              <el-button type="primary" @click="seek1">询问</el-button>-->
               <el-input
                 suffix-icon
                 placeholder="请输入您想问的..."
-                v-model.trim="dialog1"
-                @change="seek1"
+                v-model.trim="msgKnow"
+                @keyup.native.enter="handelSendKnow"
               ></el-input>
 
               <img
-                @click="seek1"
+                @click="handelSendKnow"
                 class="send-btn"
                 src="@/assets/send.jpg"
                 alt=""
                 srcset=""
               />
-              <span class="new-start-item" @click="restartDialog"
+              <span class="new-start-item" @click="handleNewChatKnow"
                 >New Chat</span
               >
             </div>
           </div>
           <div class="charts">
-            <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
           </div>
-          <!-- <div>
-            <table v-if="chartTableData.part.length" border="1" width="100%">
-              <tr>
-                <th>对话回合</th>
-                <td v-for="(item, index) in chartTableData.part" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-
-              <tr>
-                <th>标准话术/情绪中值</th>
-                <td v-for="(item, index) in chartTableData.verger" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-              <tr>
-                <th>情绪波动</th>
-                <td v-for="(item, index) in chartTableData.mood" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-            </table>
-          </div> -->
         </div>
 
         <div class="dialog-box-right">
           <div class="service-title">客服交互</div>
 
           <div id="dialogBox" class="service-box">
-            <div class="item" v-for="(item, index) in messageList" :key="index">
+            <div class="item" v-for="(item, index) in msgList" :key="index">
               <div class="left-box">
                 <div class="service-content">
-                  <div class="service-item">
+                  <div class="service-item" v-if="item.chat">
                     <div class="msg-card">
                       <div class="card-title">
                         <div class="btn-name">孙先生</div>
                       </div>
                       <div class="card-content">
-                        <div class="desc">{{ item.yonghu }}</div>
+                        <div class="desc">{{ item.msgText }}</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="service-item right"
-                    :style="{ visibility: item.user ? 'visible' : 'hidden' }"
-                  >
+                  <div v-else class="service-item right">
                     <div class="service-card">
                       <div class="card-title">
                         <div class="btn-person">人类客服</div>
@@ -101,7 +69,7 @@
                       <div class="card-content">
                         <div class="btn-ai">AI客服</div>
                         <div class="desc">
-                          {{ item.user }}
+                          {{ item.msgText }}
                           <!-- 您好，汇仁药业客服中心，请问有什么可以帮您？ -->
                         </div>
                       </div>
@@ -202,19 +170,19 @@
             <div class="chat-content">
               <!-- placeholder="当前您正在模拟人类用户，在此发言" -->
               <el-input
-                :disabled="showEnd"
+                :disabled="showEnd || disabledSendMsg"
                 suffix-icon
                 :placeholder="
                   switchValue == 'user'
                     ? '你是用户，请在这里咨询AI客服相关问题'
                     : '你是一位客服人员，请在这里回复AI用户的问题'
                 "
-                v-model.trim="dialog2"
-                @keyup.native.enter="seek2"
+                v-model.trim="msgText"
+                @keyup.native.enter="handleSendMsg"
               ></el-input>
 
               <img
-                @click="seek2"
+                @click="handleSendMsg"
                 class="el-icon-s-promotion"
                 src="@/assets/send.jpg"
                 alt=""
@@ -222,8 +190,8 @@
               />
 
               <div class="chat-btn-box">
-                <span class="new-start-item" @click="stopDialog">挂机</span>
-                <span class="new-chat-item" @click="restartDialog"
+                <span class="new-start-item" @click="handleStop">挂机</span>
+                <span class="new-chat-item" @click="handleNewChat"
                   >New Chat</span
                 >
               </div>
@@ -236,23 +204,10 @@
     <div class="team-bottom" v-if="isPC">
       <TableCpn
         @delInfo="delInfo"
-        :userInfo="userInfo"
-        :oldUserInfo1="oldUserInfo1"
-        :oldUserInfo2="oldUserInfo2"
+        :currentUser="currentUser"
+        :userInfo1="userInfo1"
+        :userInfo2="userInfo2"
       />
-      <!-- <el-row>
-        <el-col :span="16">
-          <TableCpn />
-        </el-col>
-        <el-col :span="8">
-          <div class="echarts-box">
-                  <EchartsItem ref="echarts" :option="opts1" />
-          </div>
-          <div class="echarts-box">
-                          <EchartsItem ref="echarts" :option="opts2" />
-          </div>
-        </el-col>
-      </el-row> -->
     </div>
   </div>
 </template>
@@ -261,6 +216,14 @@
 import EchartsItem from "./Echarts.vue";
 import TableCpn from "./TableCpn.vue";
 import { tableData, getLineOption } from "./const";
+import {
+  fetchConfigDify,
+  chatMessages,
+  sortedSubYitu,
+  fetchOldUserProfile,
+  fetchUser,
+} from "@/api";
+import { currentUserData } from "./mockData";
 export default {
   name: "two-team",
   components: {
@@ -268,24 +231,23 @@ export default {
     TableCpn,
   },
   mounted() {
-    // this.getUserInfo();
-    // this.getOldUserInfo();
-    this.getChartData();
+    this.getAppKey();
+    // this.getUserInfo(); // TODO 测试使用
+    // this.getOldUserInfo();// TODO 测试使用
     this.$nextTick(() => {
       window.addEventListener("resize", this.handleResize);
       this.clientWidth = window.innerWidth;
       this.getRandomId();
-      this.getAppKey();
     });
   },
   data() {
     return {
       clientWidth: 1200,
       appKey: "app-58sD2jpcITCjVZaiwPU3ZTXG",
-      dialog1: "",
-      dialog1Copy: [],
-      dialog2: "",
-      dialog2Copy: "",
+      msgKnow: "",
+      msgKnowList: [],
+      msgText: "",
+      disabledSendMsg: false,
       options: [
         {
           value: "ChatGPT4.0",
@@ -302,17 +264,15 @@ export default {
       ],
       gptValue: "ChatGPT4.0",
       switchValue: "user",
-      switchValue2: "user",
-      messageList: [],
+      msgList: [],
       showEnd: false,
       opts1: {},
-      opts2: {},
       tableData,
       conversation_id: "",
       cidList: [],
-      userInfo: {},
-      oldUserInfo1: {},
-      oldUserInfo2: {},
+      currentUser: {},
+      userInfo1: {},
+      userInfo2: {},
       randomId: "",
       chartTableData: {
         part: [],
@@ -322,18 +282,9 @@ export default {
     };
   },
   methods: {
-    getAppKey() {
-      let that = this;
-      this.$axios
-        .get("http://47.100.51.224:8080/api/config/dify")
-        .then(function (res) {
-          if (res.status == 200) {
-            that.appKey = res.data?.appSecret || "app-58sD2jpcITCjVZaiwPU3ZTXG";
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+    async getAppKey() {
+      const res = await fetchConfigDify();
+      localStorage.setItem("token", res?.appSecret || this.appKey);
     },
     getRandomId() {
       const userList = [
@@ -347,13 +298,11 @@ export default {
       this.randomId = userList[idx()];
     },
     getTwoUserInfo() {
-      if (!this.cidList.length) {
-        this.getUserInfo();
-      } else if (this.cidList.length == 1) {
-        this.getUserInfo();
+      this.getUserInfo();
+      if (this.cidList?.length == 1) {
         this.getOldUserInfo(this.cidList[0], "first");
-      } else {
-        this.getUserInfo();
+      }
+      if (this.cidList?.length >= 2) {
         const cid1 = this.cidList[this.cidList.length - 1];
         const cid2 = this.cidList[this.cidList.length - 2];
         //对话记录1
@@ -365,20 +314,17 @@ export default {
     handleResize() {
       this.clientWidth = window.innerWidth;
     },
-    seek1() {
-      console.log("this.dialog1===", this.dialog1);
-      return;
-      if (!this.dialog1) {
+    handelSendKnow() {
+      if (!this.msgKnow) {
         this.$message.error("请输入对话内容");
         return;
       }
-      this.dialog1Copy.push(this.dialog1);
-      setTimeout(() => {
-        this.toBottom("zskBox");
-      }, 100);
+      this.msgKnowList.push(this.msgKnow);
+      this.scrollChatContent("zskBox");
+      this.msgKnow = "";
     },
-    seek2() {
-      if (!this.dialog2) {
+    handleSendMsg() {
+      if (!this.msgText) {
         this.$message.error("请输入对话内容");
         return;
       }
@@ -386,210 +332,147 @@ export default {
         this.$message.error("请开始新对话");
         return;
       }
-      if (this.switchValue == "user") {
-        this.dialog2Copy = this.dialog2;
-        this.messageList.push({
-          yonghu: this.dialog2Copy,
-        });
-        this.sendChatAjax();
-        this.dialog2 = "";
-      } else {
-        this.messageList.push({
-          person: this.dialog2,
-        });
-      }
+      // 用户发消息
+      this.sendMessage();
+    },
+    scrollChatContent(id = "dialogBox") {
       setTimeout(() => {
-        this.toBottom("dialogBox");
+        var dialogBox = document.getElementById(id);
+        dialogBox.scrollTo({
+          top: dialogBox.scrollHeight,
+          behavior: "smooth",
+        });
       }, 100);
-      return;
-      this.messageList.push({
-        person: "你好，我是人工客服",
-        ai: "你好，我是AI客服",
-        user: "你好，我是用户",
+    },
+    async sendMessage() {
+      this.msgList.push({
+        chat: 1, // 1=问 0=回答
+        msgText: this.msgText,
       });
+      const postData = {
+        query: this.msgText,
+        inputs: {},
+        response_mode: "blocking",
+        user: this.randomId,
+        conversation_id: this.conversation_id,
+        // files: [
+        //   {
+        //     type: "image",
+        //     transfer_method: "remote_url",
+        //     url: "https://cloud.dify.ai/logo/logo-site.png",
+        //   },
+        // ],
+      };
+      this.msgText = "";
+      this.scrollChatContent();
+      this.disabledSendMsg = true;
+      const res = await chatMessages(postData);
+      if (res) {
+        this.conversation_id = res?.conversation_id || "";
+        this.msgList.push({
+          chat: 0, // 1=问 0=回答
+          msgText: res?.answer,
+        });
+        this.scrollChatContent();
+        this.getChartData();
+        this.getTwoUserInfo();
+        this.disabledSendMsg = false;
+      }
     },
-    toBottom(id) {
-      var dialogBox = document.getElementById(id);
-      dialogBox.scrollTo({
-        top: dialogBox.scrollHeight,
-        behavior: "smooth",
+    async getUserInfo() {
+      const res = await fetchUser({
+        userId: this.randomId,
       });
+      if (res) {
+        this.currentUser = res || {};
+      }
+      // this.currentUser = currentUserData;
     },
-    sendChatAjax() {
-      var that = this;
-      const { conversation_id, dialog2Copy, appKey } = this;
-      this.$axios({
-        method: "POST",
-        headers: {
-          authorization: "Bearer " + appKey,
-        },
-        url: "http://47.100.51.224/v1/chat-messages",
-        data: {
-          inputs: {},
-          query: dialog2Copy,
-          response_mode: "blocking",
-          conversation_id,
-          user: that.randomId,
-          files: [
-            {
-              type: "image",
-              transfer_method: "remote_url",
-              url: "https://cloud.dify.ai/logo/logo-site.png",
-            },
-          ],
-        },
-      })
-        .then(function (res) {
-          if (res.status == 200) {
-            that.conversation_id = res.data?.conversation_id || "";
-            that.$set(
-              that.messageList[that.messageList.length - 1],
-              "user",
-              res.data?.answer
-            );
-            that.addSubYitu(res.data.conversation_id);
-            that.getTwoUserInfo();
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+    async getOldUserInfo(cId, part) {
+      const res = await fetchOldUserProfile({
+        userId: this.randomId,
+        cId,
+      });
+      if (res) {
+        if (part == "first") {
+          this.userInfo1 = res || {};
+        } else if (part == "second") {
+          this.userInfo2 = res || {};
+        }
+      }
     },
-    getUserInfo() {
-      let that = this;
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/user-profile/user?userId=" +
-            that.randomId
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            that.userInfo = res.data || {};
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    getOldUserInfo(cid, part) {
-      let that = this;
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/user-profile/oldUserProfile?userId=" +
-            that.randomId +
-            "&cId=" +
-            cid
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            if (part == "first") {
-              that.oldUserInfo1 = res.data || {};
-            } else if (part == "second") {
-              that.oldUserInfo2 = res.data || {};
-            }
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    addSubYitu(cid) {
-      let that = this;
-      //   that.getChartData([
-      //     { decisionMood: "中性" },
-      //     { decisionMood: "积极" },
-      //     { decisionMood: "犹豫" },
-      //     { decisionMood: "失望不满" },
-      //     { decisionMood: "中性" },
-      //     { decisionMood: "积极" },
-      //     { decisionMood: "犹豫" },
-      //     { decisionMood: "失望不满" }
-      //   ]);
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/thoughts/dialogue/sortedSubYitu?cId=" +
-            cid
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            that.getChartData(res.data || []);
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    getChartData(list = []) {
-      // const moodMap = {
-      //   中性: 5,
-      //   积极: 10,
-      //   犹豫: 3,
-      //   失望不满: 0,
-      // };
-      // const newList = list.reverse();
-      // this.$set(
-      //   this.messageList[list.length - 1],
-      //   "chartDetail",
-      //   newList[list.length - 1] || {}
-      // );
-      // const xData = newList.map((ele, idx) => "R" + (idx + 1));
-      // const yData = [
-      //   newList.map(() => 5),
-      //   newList.map((ele) => moodMap[ele.decisionMood]),
+    async getChartData() {
+      const res = await sortedSubYitu({
+        cId: this.conversation_id,
+      });
+      console.log("res===", res);
+      if (!res) return;
+      // const res = [
+      //   {
+      //     count: "R1",
+      //     subInputId: "【开场意图识别】",
+      //     decisionMood: "中性",
+      //     kl: ["【UMB V 10标准话术】"],
+      //   },
+      //   {
+      //     count: "R2",
+      //     subInputId: "【呼进买药-购买意图未知-BR1】",
+      //     decisionMood: "",
+      //     kl: ["汇仁企业文化库", "汇仁医学库"],
+      //   },
+      //   {
+      //     count: "R3",
+      //     subInputId: "【问诊-购买意图未知-BR1-意图判断】",
+      //     decisionMood: "积极",
+      //     kl: ["汇仁产品库", "汇仁医学库"],
+      //   },
       // ];
-      // this.chartTableData = {
-      //   part: xData,
-      //   verger: yData[0],
-      //   mood: yData[1],
-      // };
+      const decisionMoodMap = {
+        中性: 5,
+        积极: 10,
+        犹豫: 3,
+        失望不满: 0,
+      };
+      const currentMoodMap = {
+        中性: 7,
+        积极: 9,
+        犹豫: 6,
+        失望不满: 5,
+      };
+      const xData = res.map((item) => item.count); //["R1", "R2", "R3", "R4", "R5", "R6"];
       this.opts1 = getLineOption({
         title: "用户情绪反馈表",
         type: "line",
         legend: ["当前对话", "标准话术/情绪中值", "情绪波动"],
         yData: [
-          [7, 6, 5.5, 5, 6, 5, 8, 6, 9, 5, 7, 8],
-          [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-          [5, 5, 5, 7, 8, 6, 7, 6, 5, 5, 4, 3],
+          [],
+          // res.map((item) => currentMoodMap[item.decisionMood || '中性']), TODO 暂时不做
+          res.map((item) => 5),
+          res.map((item) => decisionMoodMap[item.decisionMood || "中性"]),
         ],
-        xData: [
-          "R1",
-          "R2",
-          "R3",
-          "R4",
-          "R5",
-          "R6",
-          "R7",
-          "R8",
-          "R9",
-          "R10",
-          "R11",
-          "R12",
-        ],
+        xData: xData,
       });
-      // this.opts2 = getLineOption({
-      //   title: "五虎上将",
-      //   type: "bar",
-      //   legend: ["关云长", "张翼德", "赵子龙"],
-      //   yData,
-      //   xData,
-      // });
     },
+
     delInfo() {
-      this.oldUserInfo1.userInfo = {};
-      this.oldUserInfo2.userInfo = {};
+      this.userInfo1.userInfo = {};
+      this.userInfo2.userInfo = {};
     },
-    stopDialog() {
-      if (!this.messageList.length) {
+    handleStop() {
+      if (!this.msgList.length) {
         this.$message.error("暂未开启对话");
         return;
       }
       this.showEnd = true;
-      // cid 1
       this.conversation_id && this.cidList.push(this.conversation_id);
       this.conversation_id = "";
     },
-    restartDialog() {
-      this.messageList = [];
+    handleNewChatKnow() {
+      this.msgKnowList = [];
+      this.msgKnow = "";
+    },
+    handleNewChat() {
+      this.msgList = [];
       this.chartTableData = {
         part: [],
         verger: [],
@@ -605,9 +488,7 @@ export default {
   },
   watch: {
     showEnd() {
-      setTimeout(() => {
-        this.toBottom("dialogBox");
-      }, 100);
+      this.scrollChatContent("dialogBox");
     },
   },
 };
@@ -787,7 +668,8 @@ body {
       .content {
         height: 72px;
         border-bottom: none;
-        // overflow-y: scroll;
+        padding: 0;
+        overflow-y: auto;
         .zsk-item {
           overflow: hidden;
           margin-bottom: 12px;

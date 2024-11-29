@@ -4,7 +4,7 @@
     <table class="chart-table">
       <tr>
         <th></th>
-        <th width="50px" v-for="item in 12" :key="item">R{{ item }}</th>
+        <th width="50px" v-for="item in option?.xAxis?.data" :key="item">{{ item }}</th>
       </tr>
       <tr v-for="(item, index) in option.series" :key="index">
         <td>
@@ -16,7 +16,7 @@
               : "情绪波动"
           }}
         </td>
-        <td  v-for="sub in item.data" :key="sub">{{ sub }}</td>
+        <td v-for="sub in item?.data" :key="sub">{{ sub }}</td>
       </tr>
     </table>
   </div>
@@ -148,7 +148,7 @@ th {
   border: 1px solid rgb(184, 182, 182);
 }
 
-.chart-table{
+.chart-table {
   position: absolute;
   bottom: 0;
   left: 5%;

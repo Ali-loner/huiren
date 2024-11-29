@@ -951,16 +951,16 @@
     </div>
     <!-- {{ userInfo }}
     --------------------------
-    {{ oldUserInfo1 }}
+    {{ userInfo1 }}
     --------------------------
-    {{ oldUserInfo2 }} -->
+    {{ userInfo2 }} -->
   </div>
 </template>
 
 <script>
 export default {
   name: "table-cpn",
-  props: ["userInfo", "oldUserInfo1", "oldUserInfo2"],
+  props: ["currentUser", "userInfo1", "userInfo2"],
   methods: {
     getMedinice(list, name) {
       return list.find((ele) => ele.productName == name);
@@ -971,101 +971,99 @@ export default {
   },
   computed: {
     contact() {
-      return this.userInfo?.userInfo?.contact || {};
+      console.log("this.currentUser===",this.currentUser);
+      return this.currentUser?.userInfo?.contact || {};
     },
     basicConditions() {
-      return this.userInfo?.userInfo?.basicConditions || {};
+      return this.currentUser?.userInfo?.basicConditions || {};
     },
     decisionFactors() {
-      return this.userInfo?.userInfo?.decisionFactors || {};
+      return this.currentUser?.userInfo?.decisionFactors || {};
     },
     standardTechnicalPoints() {
       return (
-        this.userInfo?.knowledgeBaseSuccessRate?.standardTechnicalPoints || {}
+        this.currentUser?.knowledgeBaseSuccessRate?.standardTechnicalPoints ||
+        {}
       );
     },
     huiRenMedicalKnowledge() {
       return (
-        this.userInfo?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge || {}
+        this.currentUser?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge || {}
       );
     },
     huiRenProductKnowledge() {
       return (
-        this.userInfo?.knowledgeBaseSuccessRate?.huiRenProductKnowledge || {}
+        this.currentUser?.knowledgeBaseSuccessRate?.huiRenProductKnowledge || {}
       );
     },
     huiRenCompanyKnowledge() {
       return (
-        this.userInfo?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge || {}
+        this.currentUser?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge || {}
       );
     },
     userAnomalyInfoRecords() {
-      return this.userInfo?.userAnomalyInfoRecords || {};
+      return this.currentUser?.userAnomalyInfoRecords || {};
     },
     purchaseHistory() {
-      return this.userInfo?.purchaseHistory || [];
+      return this.currentUser?.purchaseHistory || [];
     },
 
     oldContact1() {
-      return this.oldUserInfo1?.userInfo?.contact || {};
+      return this.userInfo1?.userInfo?.contact || {};
     },
     oldBasicConditions1() {
-      return this.oldUserInfo1?.userInfo?.basicConditions || {};
+      return this.userInfo1?.userInfo?.basicConditions || {};
     },
     oldDecisionFactors1() {
-      return this.oldUserInfo1?.userInfo?.decisionFactors || {};
+      return this.userInfo1?.userInfo?.decisionFactors || {};
     },
     oldStandardTechnicalPoints1() {
       return (
-        this.oldUserInfo1?.knowledgeBaseSuccessRate?.standardTechnicalPoints ||
-        {}
+        this.userInfo1?.knowledgeBaseSuccessRate?.standardTechnicalPoints || {}
       );
     },
     oldHuiRenMedicalKnowledge1() {
       return (
-        this.oldUserInfo1?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge ||
-        {}
+        this.userInfo1?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge || {}
       );
     },
     oldHuiRenProductKnowledge1() {
       return (
-        this.oldUserInfo1?.knowledgeBaseSuccessRate?.huiRenProductKnowledge ||
-        {}
+        this.userInfo1?.knowledgeBaseSuccessRate?.huiRenProductKnowledge || {}
       );
     },
     oldHuiRenCompanyKnowledge1() {
       return (
-        this.oldUserInfo1?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge ||
-        {}
+        this.userInfo1?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge || {}
       );
     },
     oldUserAnomalyInfoRecords1() {
-      return this.oldUserInfo1?.userAnomalyInfoRecords || {};
+      return this.userInfo1?.userAnomalyInfoRecords || {};
     },
     oldPurchaseHistory1() {
-      return this.oldUserInfo1?.purchaseHistory || [];
+      return this.userInfo1?.purchaseHistory || [];
     },
 
     oldContact2() {
-      return this.oldUserInfo2?.userInfo?.contact || {};
+      return this.userInfo2?.userInfo?.contact || {};
     },
     oldBasicConditions2() {
-      return this.oldUserInfo2?.userInfo?.basicConditions || {};
+      return this.userInfo2?.userInfo?.basicConditions || {};
     },
     oldDecisionFactors2() {
-      return this.oldUserInfo2?.userInfo?.decisionFactors || {};
+      return this.userInfo2?.userInfo?.decisionFactors || {};
     },
     // oldStandardTechnicalPoints2() {
-    //     return this.oldUserInfo2?.knowledgeBaseSuccessRate?.standardTechnicalPoints || {};
+    //     return this.userInfo2?.knowledgeBaseSuccessRate?.standardTechnicalPoints || {};
     // },
     // oldHuiRenMedicalKnowledge2() {
-    //     return this.oldUserInfo2?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge || {};
+    //     return this.userInfo2?.knowledgeBaseSuccessRate?.huiRenMedicalKnowledge || {};
     // },
     // oldHuiRenProductKnowledge2() {
-    //     return this.oldUserInfo2?.knowledgeBaseSuccessRate?.huiRenProductKnowledge || {};
+    //     return this.userInfo2?.knowledgeBaseSuccessRate?.huiRenProductKnowledge || {};
     // },
     // oldHuiRenCompanyKnowledge2() {
-    //     return this.oldUserInfo2?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge || {};
+    //     return this.userInfo2?.knowledgeBaseSuccessRate?.huiRenCompanyKnowledge || {};
     // },
   },
 };
