@@ -40,7 +40,8 @@
             <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
           </div>
-          <div style="padding: 0 48px 8px 48px">
+          <div>
+            <!-- <div style="padding: 0 48px 8px 48px"> -->
             <table v-if="chartTableData.part.length" border="1" width="100%">
               <tr>
                 <th>对话回合</th>
@@ -318,7 +319,7 @@
         </div>
       </div>
     </div>
-<!-- <div class="team-bottom">
+    <!-- <div class="team-bottom">
             <img style="width: 100vw; height: calc(50vh - 24px);" src="../assets/表格.png" alt="">
     </div>-->
     <div class="team-bottom" v-if="isPC">
@@ -358,7 +359,7 @@ export default {
   mounted() {
     // this.getUserInfo();
     // this.getOldUserInfo();
-    // this.getChartData();
+    this.getChartData();
     this.$nextTick(() => {
       window.addEventListener("resize", this.handleResize);
       this.clientWidth = window.innerWidth;
@@ -589,34 +590,38 @@ export default {
         });
     },
     getChartData(list = []) {
-      const moodMap = {
-        中性: 5,
-        积极: 10,
-        犹豫: 3,
-        失望不满: 0,
-      };
-      const newList = list.reverse();
-      this.$set(
-        this.messageList[list.length - 1],
-        "chartDetail",
-        newList[list.length - 1] || {}
-      );
-      const xData = newList.map((ele, idx) => "R" + (idx + 1));
-      const yData = [
-        newList.map(() => 5),
-        newList.map((ele) => moodMap[ele.decisionMood]),
-      ];
-      this.chartTableData = {
-        part: xData,
-        verger: yData[0],
-        mood: yData[1],
-      };
+      // const moodMap = {
+      //   中性: 5,
+      //   积极: 10,
+      //   犹豫: 3,
+      //   失望不满: 0,
+      // };
+      // const newList = list.reverse();
+      // this.$set(
+      //   this.messageList[list.length - 1],
+      //   "chartDetail",
+      //   newList[list.length - 1] || {}
+      // );
+      // const xData = newList.map((ele, idx) => "R" + (idx + 1));
+      // const yData = [
+      //   newList.map(() => 5),
+      //   newList.map((ele) => moodMap[ele.decisionMood]),
+      // ];
+      // this.chartTableData = {
+      //   part: xData,
+      //   verger: yData[0],
+      //   mood: yData[1],
+      // };
       this.opts1 = getLineOption({
         title: "用户情绪反馈表",
         type: "line",
-        legend: ["标准话术/情绪中值", "情绪波动"],
-        yData,
-        xData,
+        legend: ["当前对话","标准话术/情绪中值", "情绪波动"],
+        yData:[
+          [120, 132, 101, 134, 90, 230, 210],
+          [220, 182, 191, 234, 290, 330, 310],
+          [150, 232, 201, 154, 190, 330, 410]
+        ],
+        xData:['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7'],
       });
       // this.opts2 = getLineOption({
       //   title: "五虎上将",
@@ -715,7 +720,8 @@ body {
     }
   }
   .dialog-box {
-    height: calc(50vh - 64px);
+    // height: calc(50vh - 64px);
+    height: 50vh;
     display: flex;
     column-gap: 8px;
     .desc {
@@ -766,7 +772,6 @@ body {
       }
       display: flex;
       flex-direction: column;
-      background: #fff;
       .title {
         height: 48px;
       }
@@ -1006,10 +1011,11 @@ body {
 }
 
 .dialog-box-right {
+  overflow-y: auto;
+  box-shadow: 0px 6px 4px 0px #ddd;
   .service-box {
     height: 100%;
     display: flex;
-
     .left-box {
       flex: 1;
       padding: 10px 32px 10px 10px;
@@ -1023,7 +1029,7 @@ body {
         font-weight: 700;
       }
       .service-content {
-        height: 100%;
+        height: calc(100% - 25px);
         overflow-y: auto;
         .service-item {
           display: flex;
@@ -1142,7 +1148,7 @@ body {
       padding-left: 8px;
       .asideBox {
         width: 250px;
-        margin-bottom: 40px;
+        margin-bottom: 110px;
       }
     }
   }
@@ -1150,7 +1156,7 @@ body {
     margin-top: 8px;
     border: 1px solid #ddd;
     background: #fff;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 6px 4px 0px #ddd;
 
     .chat-header {
       padding-right: 10px;
@@ -1161,6 +1167,7 @@ body {
         display: flex;
         height: 32px;
         .name-item {
+          cursor: pointer;
           display: flex;
           justify-content: center;
           align-items: center;
