@@ -176,11 +176,7 @@
               <el-input
                 :disabled="showEnd || disabledSendMsg"
                 suffix-icon
-                :placeholder="
-                  switchValue == 'user'
-                    ? '你是用户，请在这里咨询AI客服相关问题'
-                    : '你是一位客服人员，请在这里回复AI用户的问题'
-                "
+                placeholder="当前您正在模拟人类用户，在此发言"
                 v-model.trim="msgText"
                 @keyup.native.enter="handleSendMsg"
               ></el-input>
@@ -218,7 +214,7 @@
 <script>
 import EchartsItem from "./Echarts.vue";
 import TableCpn from "./TableCpn.vue";
-import { tableData, getLineOption } from "./const";
+import { tableData, getLineOption } from "@/const";
 import {
   fetchConfigDify,
   chatMessages,
@@ -302,6 +298,7 @@ export default {
       this.randomId = userList[idx()];
     },
     getTwoUserInfo() {
+      console.log(this.cidList);
       this.getUserInfo();
       if (this.cidList?.length == 1) {
         this.getOldUserInfo(this.cidList[0], "first");
@@ -406,7 +403,6 @@ export default {
       const res = await sortedSubYitu({
         cId: this.conversation_id,
       });
-
       if (!res) return;
       this.msgId++;
       const postMsg = {
@@ -469,16 +465,16 @@ export default {
         犹豫: 6,
         失望不满: 5,
       };
-      const xData = res.map((item) => item.count); //["R1", "R2", "R3", "R4", "R5", "R6"];
+      const xData = res?.map((item) => item.count); //["R1", "R2", "R3", "R4", "R5", "R6"];
       this.opts1 = getLineOption({
         title: "用户情绪反馈表",
         type: "line",
         legend: ["当前对话", "标准话术/情绪中值", "情绪波动"],
         yData: [
           [],
-          // res.map((item) => currentMoodMap[item.decisionMood || '中性']), TODO 暂时不做
-          res.map((item) => 5),
-          res.map((item) => decisionMoodMap[item.decisionMood || "中性"]),
+          // res?.map((item) => currentMoodMap[item.decisionMood || '中性']), TODO 暂时不做
+          res?.map((item) => 5),
+          res?.map((item) => decisionMoodMap[item.decisionMood || "中性"]),
         ],
         xData: xData,
       });

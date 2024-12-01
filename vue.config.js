@@ -4,6 +4,7 @@ module.exports = defineConfig({
   publicPath: './',
   lintOnSave: false,
   devServer: {
+    hot: true,
     proxy: {
       '/api': {
         target: 'http://47.100.51.224:8080',

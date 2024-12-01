@@ -798,10 +798,10 @@
               </tr>
               <tr>
                 <td class="grey">标准话术节点库</td>
-                <td>{{ oldStandardTechnicalPoints1.success }}</td>
-                <td>{{ oldStandardTechnicalPoints1.successCount }}</td>
-                <td>{{ oldStandardTechnicalPoints1.failure }}</td>
-                <td>{{ oldStandardTechnicalPoints1.failureCount }}</td>
+                <td>{{ oldStandardTechnicalPoints1?.success }}</td>
+                <td>{{ oldStandardTechnicalPoints1?.successCount }}</td>
+                <td>{{ oldStandardTechnicalPoints1?.failure }}</td>
+                <td>{{ oldStandardTechnicalPoints1?.failureCount }}</td>
                 <td class="yellow">{{ standardTechnicalPoints.success }}</td>
                 <td class="yellow">
                   {{ standardTechnicalPoints.successCount }}
@@ -813,10 +813,10 @@
               </tr>
               <tr>
                 <td class="grey">汇仁医学知识</td>
-                <td>{{ oldHuiRenMedicalKnowledge1.success }}</td>
-                <td>{{ oldHuiRenMedicalKnowledge1.successCount }}</td>
-                <td>{{ oldHuiRenMedicalKnowledge1.failure }}</td>
-                <td>{{ oldHuiRenMedicalKnowledge1.failureCount }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1?.success }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1?.successCount }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1?.failure }}</td>
+                <td>{{ oldHuiRenMedicalKnowledge1?.failureCount }}</td>
                 <td class="yellow">{{ huiRenMedicalKnowledge.success }}</td>
                 <td class="yellow">
                   {{ huiRenMedicalKnowledge.successCount }}
@@ -943,7 +943,7 @@
           </div>
           <img
             style="width: 300px; height: 210px"
-            src="../assets/logo.png"
+            src="@/assets/logo.png"
             alt=""
           />
         </div>
