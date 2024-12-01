@@ -3,13 +3,18 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: './',
   lintOnSave: false,
-  // devServer: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://api.example.com',
-  //       changeOrigin: true,
-  //       pathRewrite: { '^/api': '' },
-  //     },
-  //   },
-  // }
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://47.100.51.224:8080',
+        changeOrigin: true,
+        // pathRewrite: { '^/api': '' },
+      },
+      '/v1': {
+        target: 'http://47.100.51.224',
+        changeOrigin: true,
+        // pathRewrite: { '^/api': '' },
+      },
+    },
+  }
 })

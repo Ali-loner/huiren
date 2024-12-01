@@ -13,150 +13,130 @@
           <div class="zsk">
             <div class="title">知识库问答</div>
             <div id="zskBox" class="content">
-              <div v-for="(item, index) in dialog1Copy" :key="index">
+              <div v-for="(item, index) in msgKnowList" :key="index">
                 <div class="zsk-item">
                   <div class="fl-r desc msg msg-right">{{ item }}</div>
                 </div>
               </div>
             </div>
-            <!-- <div class="new-start">
-                    <span class="new-start-item">重新开始</span>
-            </div>-->
             <div class="search-line">
-              <!-- <el-input placeholder="请输入您想问的" v-model.trim="dialog1"></el-input>&nbsp;&nbsp;
-              <el-button type="primary" @click="seek1">询问</el-button>-->
               <el-input
                 suffix-icon
                 placeholder="请输入您想问的..."
-                v-model.trim="dialog1"
+                v-model.trim="msgKnow"
+                @keyup.native.enter="handelSendKnow"
               ></el-input>
-              <span @click="seek1" class="el-icon-s-promotion"></span>
-              <span class="new-start-item" @click="restartDialog"
+
+              <img
+                @click="handelSendKnow"
+                class="send-btn"
+                src="@/assets/send.jpg"
+                alt=""
+                srcset=""
+              />
+              <span class="new-start-item" @click="handleNewChatKnow"
                 >New Chat</span
               >
             </div>
           </div>
           <div class="charts">
-            <!-- v-if="chartTableData.part.length" -->
             <EchartsItem ref="echarts" :option="opts1" />
-          </div>
-          <div>
-            <!-- <div style="padding: 0 48px 8px 48px"> -->
-            <table v-if="chartTableData.part.length" border="1" width="100%">
-              <tr>
-                <th>对话回合</th>
-                <td v-for="(item, index) in chartTableData.part" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-              <!-- <tr>
-                <th>当前对话</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>5</td>
-              </tr>-->
-              <tr>
-                <th>标准话术/情绪中值</th>
-                <td v-for="(item, index) in chartTableData.verger" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-              <tr>
-                <th>情绪波动</th>
-                <td v-for="(item, index) in chartTableData.mood" :key="index">
-                  {{ item }}
-                </td>
-              </tr>
-            </table>
           </div>
         </div>
 
         <div class="dialog-box-right">
-          <div class="service-box">
-            <div class="left-box">
-              <div class="service-title">客服交互</div>
+          <div class="service-title">客服交互</div>
 
-              <div class="service-content">
-                <div class="service-item right">
-                  <div class="service-card">
-                    <div class="card-title">
-                      <div class="btn-person">人类客服</div>
-                    </div>
-                    <div class="card-content">
-                      <div class="btn-ai">AI客服</div>
-                      <div class="desc">
-                        您好，汇仁药业客服中心，请问有什么可以帮您？
+          <div id="dialogBox" class="service-box">
+            <div
+              class="item"
+              :data-id="item.msgId"
+              v-for="(item, index) in msgList"
+              :key="index"
+            >
+              <div class="left-box">
+                <div class="service-content">
+                  <div class="service-item" v-if="item.chat">
+                    <div class="msg-card">
+                      <div class="card-title">
+                        <div class="btn-name">孙先生</div>
+                      </div>
+                      <div class="card-content">
+                        <div class="desc">{{ item.msgText }}</div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="service-item">
-                  <div class="msg-card">
-                    <div class="card-title">
-                      <div class="btn-name">孙先生</div>
-                    </div>
-                    <div class="card-content">
-                      <div class="desc">我要购买你们的产品</div>
+                  <div v-else class="service-item right">
+                    <div class="service-card">
+                      <div class="card-title">
+                        <div class="btn-person">人类客服</div>
+                      </div>
+                      <div class="card-content">
+                        <div class="btn-ai">AI客服</div>
+                        <div class="desc">
+                          {{ item.msgText }}
+                          <!-- 您好，汇仁药业客服中心，请问有什么可以帮您？ -->
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="service-item">
-                  <div class="finish-card">
-                    <div class="card-title">
-                      本轮对话已结束，以下是对本次对话的整体评价：
-                    </div>
-                    <div class="card-content">
-                      <div class="desc">
-                        此处为本次圣诞的整体评价详情信息...
+                  <div v-if="showEnd" class="service-item">
+                    <div class="finish-card">
+                      <div class="card-title">
+                        本轮对话已结束，以下是对本次对话的整体评价：
+                      </div>
+                      <div class="card-content">
+                        <div class="desc">
+                          此处为本次圣诞的整体评价详情信息...
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="right-box">
-              <div class="asideBox">
-                <div>
-                  <span>客服会话</span>
-                  <span>【 R3】</span>
-                </div>
-                <div>
-                  <span>ID：</span>
-                  <span>【呼进买药-购买意图未知- BR1】</span>
-                </div>
-                <div>
-                  <span>知识库引用来源：</span>
-                  <span>【UMB V10 标准话术】</span>
-                </div>
-                <div>
-                  <span>话术对齐得分</span>
-                  <span>【85%】</span>
-                </div>
-                <div>
-                  <span>话术对齐总分</span>
-                  <span>【70%】</span>
-                </div>
-              </div>
-              <div class="asideBox">
-                <div>
-                  <span>用户意图识别</span>
-                </div>
-                <div>
-                  <span>ID：</span>
-                  <span>【呼进买药--购买意图未知-BR1】</span>
-                </div>
-                <div>
-                  <span>用户情绪识别 ：</span>
-                  <span>【中性】</span>
-                </div>
-                <div>
-                  <span>话术对齐总分：</span>
-                  <span>【70%】</span>
+              <div class="right-box" v-if="isPC && msgList.length > 1">
+                <!-- <div class="asideBox" v-if="item.chat && item.chatDetail">
+                  <div>
+                    <span>用户意图识别</span>
+                  </div>
+                  <div>
+                    <span>ID：</span>
+                    <span>{{ item?.chatDetail?.subInputId }}</span>
+                  </div>
+                  <div>
+                    <span>用户情绪识别 ：</span>
+                    <span>{{ item?.chatDetail?.decisionMood }}</span>
+                  </div>
+                  <div>
+                    <span>话术对齐总分：</span>
+                    <span>【0%】</span>
+                  </div>
+                </div> -->
+
+                <div class="asideBox" v-if="!item.chat && item.chatDetail">
+                  <div>
+                    <span>客服会话</span>
+                    <span>【 {{ item?.chatDetail?.count }} 】</span>
+                  </div>
+                  <div>
+                    <span>ID：</span>
+                    <span>【{{ item?.chatDetail?.subInputId }}】</span>
+                    <!-- <span>【呼进买药-购买意图未知- BR1】</span> -->
+                  </div>
+                  <div>
+                    <span>知识库引用来源：</span>
+                    <!-- <span>【UMB V10 标准话术】</span> -->
+                    <span>【{{ item?.chatDetail?.kl?.[0] }}】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐得分</span>
+                    <span>【0%】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐总分</span>
+                    <span>【0%】</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,156 +172,45 @@
               </div>
             </div>
             <div class="chat-content">
+              <!-- placeholder="当前您正在模拟人类用户，在此发言" -->
               <el-input
+                :disabled="showEnd || disabledSendMsg"
                 suffix-icon
-                placeholder="当前您正在模拟人类用户，在此发言"
-                v-model.trim="dialog1"
+                :placeholder="
+                  switchValue == 'user'
+                    ? '你是用户，请在这里咨询AI客服相关问题'
+                    : '你是一位客服人员，请在这里回复AI用户的问题'
+                "
+                v-model.trim="msgText"
+                @keyup.native.enter="handleSendMsg"
               ></el-input>
-              <span @click="seek1" class="el-icon-s-promotion"></span>
+
+              <img
+                @click="handleSendMsg"
+                class="el-icon-s-promotion"
+                src="@/assets/send.jpg"
+                alt=""
+                srcset=""
+              />
 
               <div class="chat-btn-box">
-                <span class="new-start-item" @click="restartDialog">挂机</span>
-                <span class="new-chat-item" @click="restartDialog"
+                <span class="new-start-item" @click="handleStop">挂机</span>
+                <span class="new-chat-item" @click="handleNewChat"
                   >New Chat</span
                 >
               </div>
             </div>
           </div>
-
-          <!-- <div class="header">
-            <el-select size="mini" v-model="gptValue" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <span class="title">ChatGPT 4o</span>
-
-            <span class="desc">客服/用户切换</span>
-            <el-switch
-              active-value="user"
-              inactive-value="person"
-              v-model="switchValue"
-              active-color="#eee"
-              inactive-color="#eee"
-              disabled
-            ></el-switch>
-           
-          </div>
-          <div id="dialogBox" class="content">
-            <div class="content-l">
-              <div
-                v-for="(item, index) in messageList"
-                :key="index"
-                class="dialog-item"
-              >
-                <div class="left">
-                  <div class="user">
-                    <div>AI用户</div>
-                    <span>{{ item.yonghu }}</span>
-                  </div>
-                </div>
-                <div
-                  class="right"
-                  :style="{ visibility: item.user ? 'visible' : 'hidden' }"
-                >
-                  <div class="right-item">
-                    <div class="person">
-                      <div>人类客服</div>
-                    </div>
-                    <div class="ai">
-                      <div>AI客服</div>
-                      <span>{{ item.user }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="isPC && item.chartDetail" class="asideBox">
-                  <div>
-                    <span>客服会话：</span>
-                    <span>【 R {{ index + 1 }} 】</span>
-                  </div>
-                  <div>
-                    <span>ID：</span>
-                    <span>{{ item.chartDetail.subInputId }}</span>
-                  </div>
-                  <div>
-                    <span>知识库引用来源：</span>
-                    <span>{{ item.chartDetail.kl?.[0] }}</span>
-                  </div>
-                  <div>
-                    <span>话术对齐得分：</span>
-                    <span>【85%】</span>
-                  </div>
-                  <div>
-                    <span>话术对齐总分：</span>
-                    <span>【70%】</span>
-                  </div>
-                  <br />
-                  <div>
-                    <span>用户意图识别 ID：</span>
-                    <span>{{ item.chartDetail.subInputId }}</span>
-                  </div>
-                  <div>
-                    <span>用户情绪识别：</span>
-                    <span>{{ item.chartDetail.decisionMood }}</span>
-                  </div>
-                </div>
-              </div>
-              <div v-if="showEnd" class="dialog-end">
-                <div class="main">
-                  本轮对话已结束，以下是对本次对话的整体评价
-                </div>
-                <div class="desc">此处为本次圣诞的整体评价详情信息...</div>
-              </div>
-            </div>
-            <div v-if="isPC" class="content-r"></div>
-          </div>
-          <div class="new-start">
-            <span class="new-start-item" @click="restartDialog">New Chat</span>
-            <span class="new-start-item" @click="stopDialog">挂 机</span>
-          </div>
-          <div class="search-line">
-            <el-input
-              :disabled="showEnd"
-              :placeholder="
-                switchValue == 'user'
-                  ? '你是用户，请在这里咨询AI客服相关问题'
-                  : '你是一位客服人员，请在这里回复AI用户的问题'
-              "
-              v-model.trim="dialog2"
-              suffix-icon
-            ></el-input
-            >&nbsp;&nbsp;
-            <span @click="seek2" class="el-icon-s-promotion"></span>
-          </div> -->
         </div>
       </div>
     </div>
-    <!-- <div class="team-bottom">
-            <img style="width: 100vw; height: calc(50vh - 24px);" src="../assets/表格.png" alt="">
-    </div>-->
     <div class="team-bottom" v-if="isPC">
       <TableCpn
         @delInfo="delInfo"
-        :userInfo="userInfo"
-        :oldUserInfo1="oldUserInfo1"
-        :oldUserInfo2="oldUserInfo2"
+        :currentUser="currentUser"
+        :userInfo1="userInfo1"
+        :userInfo2="userInfo2"
       />
-      <!-- <el-row>
-        <el-col :span="16">
-          <TableCpn />
-        </el-col>
-        <el-col :span="8">
-          <div class="echarts-box">
-                  <EchartsItem ref="echarts" :option="opts1" />
-          </div>
-          <div class="echarts-box">
-                          <EchartsItem ref="echarts" :option="opts2" />
-          </div>
-        </el-col>
-      </el-row> -->
     </div>
   </div>
 </template>
@@ -350,6 +219,14 @@
 import EchartsItem from "./Echarts.vue";
 import TableCpn from "./TableCpn.vue";
 import { tableData, getLineOption } from "./const";
+import {
+  fetchConfigDify,
+  chatMessages,
+  sortedSubYitu,
+  fetchOldUserProfile,
+  fetchUser,
+} from "@/api";
+import { currentUserData } from "./mockData";
 export default {
   name: "two-team",
   components: {
@@ -357,9 +234,9 @@ export default {
     TableCpn,
   },
   mounted() {
-    // this.getUserInfo();
-    // this.getOldUserInfo();
-    this.getChartData();
+    this.getAppKey();
+    // this.getUserInfo(); // TODO 测试使用
+    // this.getOldUserInfo();// TODO 测试使用
     this.$nextTick(() => {
       window.addEventListener("resize", this.handleResize);
       this.clientWidth = window.innerWidth;
@@ -369,9 +246,11 @@ export default {
   data() {
     return {
       clientWidth: 1200,
-      dialog1: "",
-      dialog1Copy: [],
-      dialog2: "",
+      appKey: "app-58sD2jpcITCjVZaiwPU3ZTXG",
+      msgKnow: "",
+      msgKnowList: [],
+      msgText: "",
+      disabledSendMsg: false,
       options: [
         {
           value: "ChatGPT4.0",
@@ -388,17 +267,16 @@ export default {
       ],
       gptValue: "ChatGPT4.0",
       switchValue: "user",
-      switchValue2: "user",
-      messageList: [],
+      msgList: [],
+      msgId: -1, // 机器人回复自增id
       showEnd: false,
       opts1: {},
-      opts2: {},
       tableData,
       conversation_id: "",
       cidList: [],
-      userInfo: {},
-      oldUserInfo1: {},
-      oldUserInfo2: {},
+      currentUser: {},
+      userInfo1: {},
+      userInfo2: {},
       randomId: "",
       chartTableData: {
         part: [],
@@ -408,6 +286,10 @@ export default {
     };
   },
   methods: {
+    async getAppKey() {
+      const res = await fetchConfigDify();
+      localStorage.setItem("token", res?.appSecret || this.appKey);
+    },
     getRandomId() {
       const userList = [
         "a5695fd5-f84b-45f1-9c61-12d33ada2bc7",
@@ -420,13 +302,11 @@ export default {
       this.randomId = userList[idx()];
     },
     getTwoUserInfo() {
-      if (!this.cidList.length) {
-        this.getUserInfo();
-      } else if (this.cidList.length == 1) {
-        this.getUserInfo();
+      this.getUserInfo();
+      if (this.cidList?.length == 1) {
         this.getOldUserInfo(this.cidList[0], "first");
-      } else {
-        this.getUserInfo();
+      }
+      if (this.cidList?.length >= 2) {
         const cid1 = this.cidList[this.cidList.length - 1];
         const cid2 = this.cidList[this.cidList.length - 2];
         //对话记录1
@@ -438,19 +318,17 @@ export default {
     handleResize() {
       this.clientWidth = window.innerWidth;
     },
-    seek1() {
-      return;
-      if (!this.dialog1) {
+    handelSendKnow() {
+      if (!this.msgKnow) {
         this.$message.error("请输入对话内容");
         return;
       }
-      this.dialog1Copy.push(this.dialog1);
-      setTimeout(() => {
-        this.toBottom("zskBox");
-      }, 100);
+      this.msgKnowList.push(this.msgKnow);
+      this.scrollChatContent("zskBox");
+      this.msgKnow = "";
     },
-    seek2() {
-      if (!this.dialog2) {
+    handleSendMsg() {
+      if (!this.msgText) {
         this.$message.error("请输入对话内容");
         return;
       }
@@ -458,195 +336,173 @@ export default {
         this.$message.error("请开始新对话");
         return;
       }
-      if (this.switchValue == "user") {
-        this.messageList.push({
-          yonghu: this.dialog2,
-        });
-        this.sendChatAjax();
-      } else {
-        this.messageList.push({
-          person: this.dialog2,
-        });
-      }
+      // 用户发消息
+      this.sendMessage();
+    },
+    scrollChatContent(id = "dialogBox") {
       setTimeout(() => {
-        this.toBottom("dialogBox");
+        var dialogBox = document.getElementById(id);
+        dialogBox.scrollTo({
+          top: dialogBox.scrollHeight,
+          behavior: "smooth",
+        });
       }, 100);
-      return;
-      this.messageList.push({
-        person: "你好，我是人工客服",
-        ai: "你好，我是AI客服",
-        user: "你好，我是用户",
+    },
+    async sendMessage() {
+      this.msgId++;
+      this.msgList.push({
+        chat: 1, // 1=问 0=回答
+        msgText: this.msgText,
+        msgId: this.msgId,
       });
+      const postData = {
+        query: this.msgText,
+        inputs: {},
+        response_mode: "blocking",
+        user: this.randomId,
+        conversation_id: this.conversation_id,
+        // files: [
+        //   {
+        //     type: "image",
+        //     transfer_method: "remote_url",
+        //     url: "https://cloud.dify.ai/logo/logo-site.png",
+        //   },
+        // ],
+      };
+      this.msgText = "";
+      this.scrollChatContent();
+      this.disabledSendMsg = true;
+      const res = await chatMessages(postData);
+      if (res) {
+        this.conversation_id = res?.conversation_id || "";
+        this.getChartData(res?.answer);
+        this.getTwoUserInfo();
+        this.disabledSendMsg = false;
+      }
     },
-    toBottom(id) {
-      var dialogBox = document.getElementById(id);
-      dialogBox.scrollTo({
-        top: dialogBox.scrollHeight,
-        behavior: "smooth",
+    async getUserInfo() {
+      const res = await fetchUser({
+        userId: this.randomId,
       });
+      if (res) {
+        this.currentUser = res || {};
+      }
+      // this.currentUser = currentUserData;
     },
-    sendChatAjax() {
-      var that = this;
-      const { conversation_id, dialog2 } = this;
-      this.$axios({
-        method: "POST",
-        headers: {
-          authorization: "Bearer app-qMOb4h7wmCSfcMRkXclDGPGA",
-        },
-        url: "http://47.100.51.224/v1/chat-messages",
-        data: {
-          inputs: {},
-          query: dialog2,
-          response_mode: "blocking",
-          conversation_id,
-          user: that.randomId,
-          files: [
-            {
-              type: "image",
-              transfer_method: "remote_url",
-              url: "https://cloud.dify.ai/logo/logo-site.png",
-            },
-          ],
-        },
-      })
-        .then(function (res) {
-          if (res.status == 200) {
-            that.conversation_id = res.data?.conversation_id || "";
-            that.$set(
-              that.messageList[that.messageList.length - 1],
-              "user",
-              res.data?.answer
-            );
-            that.addSubYitu(res.data.conversation_id);
-            that.getTwoUserInfo();
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+    async getOldUserInfo(cId, part) {
+      const res = await fetchOldUserProfile({
+        userId: this.randomId,
+        cId,
+      });
+      if (res) {
+        if (part == "first") {
+          this.userInfo1 = res || {};
+        } else if (part == "second") {
+          this.userInfo2 = res || {};
+        }
+      }
     },
-    getUserInfo() {
-      let that = this;
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/user-profile/user?userId=" +
-            that.randomId
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            that.userInfo = res.data || {};
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    getOldUserInfo(cid, part) {
-      let that = this;
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/user-profile/oldUserProfile?userId=" +
-            that.randomId +
-            "&cId=" +
-            cid
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            if (part == "first") {
-              that.oldUserInfo1 = res.data || {};
-            } else if (part == "second") {
-              that.oldUserInfo2 = res.data || {};
-            }
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    addSubYitu(cid) {
-      let that = this;
-      //   that.getChartData([
-      //     { decisionMood: "中性" },
-      //     { decisionMood: "积极" },
-      //     { decisionMood: "犹豫" },
-      //     { decisionMood: "失望不满" },
-      //     { decisionMood: "中性" },
-      //     { decisionMood: "积极" },
-      //     { decisionMood: "犹豫" },
-      //     { decisionMood: "失望不满" }
-      //   ]);
-      this.$axios
-        .get(
-          "http://47.100.51.224:8080/api/thoughts/dialogue/sortedSubYitu?cId=" +
-            cid
-        )
-        .then(function (res) {
-          if (res.status == 200) {
-            that.getChartData(res.data || []);
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    getChartData(list = []) {
-      // const moodMap = {
-      //   中性: 5,
-      //   积极: 10,
-      //   犹豫: 3,
-      //   失望不满: 0,
-      // };
-      // const newList = list.reverse();
-      // this.$set(
-      //   this.messageList[list.length - 1],
-      //   "chartDetail",
-      //   newList[list.length - 1] || {}
-      // );
-      // const xData = newList.map((ele, idx) => "R" + (idx + 1));
-      // const yData = [
-      //   newList.map(() => 5),
-      //   newList.map((ele) => moodMap[ele.decisionMood]),
+    async getChartData(answer) {
+      const res = await sortedSubYitu({
+        cId: this.conversation_id,
+      });
+
+      if (!res) return;
+      this.msgId++;
+      const postMsg = {
+        chat: 0, // 1=问 0=回答
+        msgText: answer,
+        msgId: this.msgId,
+        chatDetail: res[res.length - 1],
+      };
+      this.msgList.push(postMsg);
+
+      // const prevList = this.msgList.map((item, index) => {
+      //   if (index === this.msgId - 1) {
+      //     return {
+      //       ...item,
+      //       chatDetail: res[this.msgId - 1],
+      //     };
+      //   }
+      //   return item;
+      // });
+      // this.msgList = [...prevList, postMsg];
+      // console.log("this.msgList===", this.msgList);
+      this.scrollChatContent();
+
+      // this.msgList = this.msgList.map((item, index) => {
+      //   return {
+      //     chatDetail: index === prev ? res[prev] : null,
+      //     ...item,
+      //   };
+      // });
+
+      // const res = [
+      //   {
+      //     count: "R1",
+      //     subInputId: "【开场意图识别】",
+      //     decisionMood: "中性",
+      //     kl: ["【UMB V 10标准话术】"],
+      //   },
+      //   {
+      //     count: "R2",
+      //     subInputId: "【呼进买药-购买意图未知-BR1】",
+      //     decisionMood: "",
+      //     kl: ["汇仁企业文化库", "汇仁医学库"],
+      //   },
+      //   {
+      //     count: "R3",
+      //     subInputId: "【问诊-购买意图未知-BR1-意图判断】",
+      //     decisionMood: "积极",
+      //     kl: ["汇仁产品库", "汇仁医学库"],
+      //   },
       // ];
-      // this.chartTableData = {
-      //   part: xData,
-      //   verger: yData[0],
-      //   mood: yData[1],
-      // };
+      const decisionMoodMap = {
+        中性: 5,
+        积极: 10,
+        犹豫: 3,
+        失望不满: 0,
+      };
+      const currentMoodMap = {
+        中性: 7,
+        积极: 9,
+        犹豫: 6,
+        失望不满: 5,
+      };
+      const xData = res.map((item) => item.count); //["R1", "R2", "R3", "R4", "R5", "R6"];
       this.opts1 = getLineOption({
         title: "用户情绪反馈表",
         type: "line",
-        legend: ["当前对话","标准话术/情绪中值", "情绪波动"],
-        yData:[
-          [120, 132, 101, 134, 90, 230, 210],
-          [220, 182, 191, 234, 290, 330, 310],
-          [150, 232, 201, 154, 190, 330, 410]
+        legend: ["当前对话", "标准话术/情绪中值", "情绪波动"],
+        yData: [
+          [],
+          // res.map((item) => currentMoodMap[item.decisionMood || '中性']), TODO 暂时不做
+          res.map((item) => 5),
+          res.map((item) => decisionMoodMap[item.decisionMood || "中性"]),
         ],
-        xData:['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7'],
+        xData: xData,
       });
-      // this.opts2 = getLineOption({
-      //   title: "五虎上将",
-      //   type: "bar",
-      //   legend: ["关云长", "张翼德", "赵子龙"],
-      //   yData,
-      //   xData,
-      // });
     },
+
     delInfo() {
-      this.oldUserInfo1.userInfo = {};
-      this.oldUserInfo2.userInfo = {};
+      this.userInfo1.userInfo = {};
+      this.userInfo2.userInfo = {};
     },
-    stopDialog() {
-      if (!this.messageList.length) {
+    handleStop() {
+      if (!this.msgList.length) {
         this.$message.error("暂未开启对话");
         return;
       }
       this.showEnd = true;
-      // cid 1
       this.conversation_id && this.cidList.push(this.conversation_id);
       this.conversation_id = "";
     },
-    restartDialog() {
-      this.messageList = [];
+    handleNewChatKnow() {
+      this.msgKnowList = [];
+      this.msgKnow = "";
+    },
+    handleNewChat() {
+      this.msgList = [];
       this.chartTableData = {
         part: [],
         verger: [],
@@ -662,9 +518,7 @@ export default {
   },
   watch: {
     showEnd() {
-      setTimeout(() => {
-        this.toBottom("dialogBox");
-      }, 100);
+      this.scrollChatContent("dialogBox");
     },
   },
 };
@@ -768,6 +622,7 @@ body {
     .dialog-box-right {
       .zsk {
         border: 1px solid #ddd;
+        background: #fff;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
       }
       display: flex;
@@ -785,26 +640,27 @@ body {
       }
       .search-line {
         display: flex;
-        position: relative;
-        .el-icon-s-promotion {
-          color: #0e69b6;
-          font-size: 24px;
+        align-items: center;
+        background: #eee;
+        .send-btn {
+          width: 32px;
+          height: 32px;
+          margin-right: 10px;
           cursor: pointer;
-          transform: translateY(8px);
-          position: absolute;
-          right: 20px;
         }
         .new-start-item {
-          position: absolute;
-          z-index: 1;
-          right: 50px;
-          top: 50%;
-          transform: translateY(-50%);
+          border-radius: 8px;
+          border: 1px solid #ddd;
           background: #fff;
-          border: 1px solid #eee;
-          padding: 2px 4px;
-          font-size: 13px;
-          border-radius: 4px;
+          color: #0a50a9;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          width: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
         }
       }
       .new-start {
@@ -842,7 +698,8 @@ body {
       .content {
         height: 72px;
         border-bottom: none;
-        // overflow-y: scroll;
+        padding: 0;
+        overflow-y: auto;
         .zsk-item {
           overflow: hidden;
           margin-bottom: 12px;
@@ -884,96 +741,6 @@ body {
         overflow-y: scroll;
         padding: 0 40px 40px 20px;
         font-size: 12px;
-        .dialog-end {
-          margin-top: 20px;
-          border-radius: 10px;
-          background: #edf5f8;
-          padding: 20px;
-          .main,
-          .desc {
-            margin-bottom: 8px;
-          }
-          .main {
-            color: #206ccf;
-            font-weight: 900;
-            font-size: 14px;
-          }
-          .desc {
-            font-size: 12px;
-          }
-        }
-        .dialog-item {
-          padding: 20px 0 20px 20px;
-          border-bottom: 1px dotted #c9cdd4; // overflow: hidden;
-          position: relative;
-          .asideBox {
-            position: absolute;
-            top: 0;
-            background: #eef3f9;
-            width: 33%;
-            height: 100%;
-            right: 0;
-            transform: translateX(100%);
-            padding: 20px;
-            margin-bottom: 8px;
-          }
-          .right {
-            overflow: hidden;
-            .right-item {
-              max-width: 260px;
-              margin-top: 16px;
-              float: right; //   margin-right: 40px;
-              //   .el-tag {
-              //     margin: 8px 0;
-              //   }
-              border-radius: 10px;
-              border: 1px solid #0a50a9;
-              overflow: hidden;
-              margin-right: 32px;
-              .person {
-                background: #0a50a9;
-                padding: 16px 10px;
-                div {
-                  width: fit-content;
-                  padding: 5px 10px;
-                  background: #fff;
-                  border-radius: 20px;
-                  color: #0a50a9;
-                  margin-bottom: 10px;
-                }
-              }
-              .ai {
-                padding: 16px 10px;
-                div {
-                  width: fit-content;
-                  padding: 5px 10px;
-                  background: #0a50a9;
-                  border-radius: 20px;
-                  color: #fff;
-                  margin-bottom: 10px;
-                }
-              }
-            }
-          }
-          .left {
-            overflow: hidden;
-            .user {
-              float: left;
-              width: 200px;
-              border-radius: 10px;
-              background: #f2f2f2;
-              padding: 10px;
-              div {
-                width: fit-content;
-                padding: 5px 10px;
-                background: #fff;
-                border-radius: 20px;
-                color: #0a50a9;
-                margin-bottom: 10px;
-              }
-            }
-          }
-        }
         display: flex;
         .content-l {
           flex: 3;
@@ -1013,24 +780,33 @@ body {
 .dialog-box-right {
   overflow-y: auto;
   box-shadow: 0px 6px 4px 0px #ddd;
+  border: 1px solid #ddd;
+
+  .service-title {
+    color: #0a50a9;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    background: #fff;
+    padding: 6px 10px;
+  }
   .service-box {
     height: 100%;
-    display: flex;
+
+    overflow-y: auto;
+    background: #fff;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    .item {
+      display: flex;
+    }
+
     .left-box {
-      flex: 1;
+      width: calc(100% - 250px);
       padding: 10px 32px 10px 10px;
-      border: 1px solid #ddd;
       background: #fff;
 
-      .service-title {
-        color: #0a50a9;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 700;
-      }
       .service-content {
-        height: calc(100% - 25px);
-        overflow-y: auto;
         .service-item {
           display: flex;
           align-items: center;
@@ -1043,6 +819,7 @@ body {
           border-radius: 8px;
           overflow: hidden;
           border: 1px solid #0a50a9;
+          margin-bottom: 30px;
           .card-title {
             background: #0a50a9;
             display: flex;
@@ -1087,7 +864,7 @@ body {
         }
         .msg-card {
           width: 100%;
-          margin-top: 54px;
+          margin: 20px 0;
           display: flex;
           padding: 10px;
           flex-direction: column;
@@ -1120,7 +897,7 @@ body {
 
         .finish-card {
           width: 100%;
-          margin-top: 10px;
+          margin: 10px 0;
           display: flex;
           padding: 10px;
           flex-direction: column;
@@ -1141,14 +918,15 @@ body {
       }
     }
     .right-box {
-      padding-top: 16px;
-      border: 1px solid #ddd;
+      padding-top: 10px;
+      // border: 1px solid #ddd;
       font-size: 10px;
       background: #ecf3f9;
       padding-left: 8px;
+      width: 250px;
       .asideBox {
-        width: 250px;
-        margin-bottom: 110px;
+        width: 100%;
+        margin-bottom: 85px;
       }
     }
   }
@@ -1197,7 +975,7 @@ body {
       }
       .chat-body-right {
         /deep/ .el-select {
-          width: 120px;
+          width: 140px;
           .el-input__inner {
             background: #fff;
             border: 0;
@@ -1223,10 +1001,10 @@ body {
         border: 0;
       }
       .el-icon-s-promotion {
-        color: #0e69b6;
-        font-size: 24px;
         cursor: pointer;
         margin-right: 28px;
+        width: 32px;
+        height: 32px;
       }
       .chat-btn-box {
         display: flex;
@@ -1246,6 +1024,10 @@ body {
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          &:hover {
+            background-color: #0e69b6;
+            color: #fff;
+          }
         }
         .new-chat-item {
           border-radius: 8px;
@@ -1260,6 +1042,10 @@ body {
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          &:hover {
+            background-color: #0e69b6;
+            color: #fff;
+          }
         }
       }
     }
