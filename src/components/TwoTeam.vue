@@ -48,7 +48,12 @@
           <div class="service-title">客服交互</div>
 
           <div id="dialogBox" class="service-box">
-            <div class="item" v-for="(item, index) in msgList" :key="index">
+            <div
+              class="item"
+              :data-id="item.msgId"
+              v-for="(item, index) in msgList"
+              :key="index"
+            >
               <div class="left-box">
                 <div class="service-content">
                   <div class="service-item" v-if="item.chat">
@@ -90,48 +95,47 @@
                   </div>
                 </div>
               </div>
-              <div class="right-box" v-if="isPC && item?.chartDetail">
-                <div class="asideBox">
-                  <div>
-                    <span>客服会话</span>
-                    <span>【 R{{ index + 1 }}】</span>
-                  </div>
-                  <div>
-                    <span>ID：</span>
-                    <span>【{{ item?.chartDetail?.subInputId }}】</span>
-                    <!-- <span>【呼进买药-购买意图未知- BR1】</span> -->
-                  </div>
-                  <div>
-                    <span>知识库引用来源：</span>
-                    <!-- <span>【UMB V10 标准话术】</span> -->
-                    <span>【{{ item?.chartDetail?.kl?.[0] }}】</span>
-                  </div>
-                  <div>
-                    <span>话术对齐得分</span>
-                    <span>【85%】</span>
-                  </div>
-                  <div>
-                    <span>话术对齐总分</span>
-                    <span>【70%】</span>
-                  </div>
-                </div>
-                <div class="asideBox">
+              <div class="right-box" v-if="isPC && msgList.length > 1">
+                <!-- <div class="asideBox" v-if="item.chat && item.chatDetail">
                   <div>
                     <span>用户意图识别</span>
                   </div>
                   <div>
                     <span>ID：</span>
-                    <!-- <span>【呼进买药--购买意图未知-BR1】</span> -->
-                    <span>{{ item?.chartDetail?.subInputId }}</span>
+                    <span>{{ item?.chatDetail?.subInputId }}</span>
                   </div>
                   <div>
                     <span>用户情绪识别 ：</span>
-                    <!-- <span>【中性】</span> -->
-                    <span>{{ item?.chartDetail?.decisionMood }}</span>
+                    <span>{{ item?.chatDetail?.decisionMood }}</span>
                   </div>
                   <div>
                     <span>话术对齐总分：</span>
-                    <span>【70%】</span>
+                    <span>【0%】</span>
+                  </div>
+                </div> -->
+
+                <div class="asideBox" v-if="!item.chat && item.chatDetail">
+                  <div>
+                    <span>客服会话</span>
+                    <span>【 {{ item?.chatDetail?.count }} 】</span>
+                  </div>
+                  <div>
+                    <span>ID：</span>
+                    <span>【{{ item?.chatDetail?.subInputId }}】</span>
+                    <!-- <span>【呼进买药-购买意图未知- BR1】</span> -->
+                  </div>
+                  <div>
+                    <span>知识库引用来源：</span>
+                    <!-- <span>【UMB V10 标准话术】</span> -->
+                    <span>【{{ item?.chatDetail?.kl?.[0] }}】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐得分</span>
+                    <span>【0%】</span>
+                  </div>
+                  <div>
+                    <span>话术对齐总分</span>
+                    <span>【0%】</span>
                   </div>
                 </div>
               </div>
@@ -265,6 +269,7 @@ export default {
       gptValue: "ChatGPT4.0",
       switchValue: "user",
       msgList: [],
+      msgId: -1, // 机器人回复自增id
       showEnd: false,
       opts1: {},
       tableData,
@@ -345,9 +350,11 @@ export default {
       }, 100);
     },
     async sendMessage() {
+      this.msgId++;
       this.msgList.push({
         chat: 1, // 1=问 0=回答
         msgText: this.msgText,
+        msgId: this.msgId,
       });
       const postData = {
         query: this.msgText,
@@ -369,12 +376,7 @@ export default {
       const res = await chatMessages(postData);
       if (res) {
         this.conversation_id = res?.conversation_id || "";
-        this.msgList.push({
-          chat: 0, // 1=问 0=回答
-          msgText: res?.answer,
-        });
-        this.scrollChatContent();
-        this.getChartData();
+        this.getChartData(res?.answer);
         this.getTwoUserInfo();
         this.disabledSendMsg = false;
       }
@@ -401,12 +403,41 @@ export default {
         }
       }
     },
-    async getChartData() {
+    async getChartData(answer) {
       const res = await sortedSubYitu({
         cId: this.conversation_id,
       });
-      console.log("res===", res);
+
       if (!res) return;
+      this.msgId++;
+      const postMsg = {
+        chat: 0, // 1=问 0=回答
+        msgText: answer,
+        msgId: this.msgId,
+        chatDetail: res[res.length - 1],
+      };
+      this.msgList.push(postMsg);
+
+      // const prevList = this.msgList.map((item, index) => {
+      //   if (index === this.msgId - 1) {
+      //     return {
+      //       ...item,
+      //       chatDetail: res[this.msgId - 1],
+      //     };
+      //   }
+      //   return item;
+      // });
+      // this.msgList = [...prevList, postMsg];
+      // console.log("this.msgList===", this.msgList);
+      this.scrollChatContent();
+
+      // this.msgList = this.msgList.map((item, index) => {
+      //   return {
+      //     chatDetail: index === prev ? res[prev] : null,
+      //     ...item,
+      //   };
+      // });
+
       // const res = [
       //   {
       //     count: "R1",
@@ -889,12 +920,13 @@ body {
     }
     .right-box {
       padding-top: 10px;
-      border: 1px solid #ddd;
+      // border: 1px solid #ddd;
       font-size: 10px;
       background: #ecf3f9;
       padding-left: 8px;
+      width: 250px;
       .asideBox {
-        width: 250px;
+        width: 100%;
         margin-bottom: 85px;
       }
     }
