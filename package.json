@@ -15,7 +15,7 @@
     "mammoth": "^1.8.0",
     "snowflake-id": "^1.1.0",
     "vue": "^2.6.14",
-    "vue-router": "3.5.3"
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

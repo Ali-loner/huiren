@@ -382,7 +382,8 @@ export default {
         userId: this.randomId,
       });
       if (res) {
-        this.currentUser = res || {};
+        this.currentUser =
+          JSON.parse(JSON.stringify(res).replaceAll("NULL", "")) || {};
       }
       // this.currentUser = currentUserData;
     },
@@ -393,9 +394,11 @@ export default {
       });
       if (res) {
         if (part == "first") {
-          this.userInfo1 = res || {};
+          this.userInfo1 =
+            JSON.parse(JSON.stringify(res).replaceAll("NULL", "")) || {};
         } else if (part == "second") {
-          this.userInfo2 = res || {};
+          this.userInfo2 =
+            JSON.parse(JSON.stringify(res).replaceAll("NULL", "")) || {};
         }
       }
     },
