@@ -274,11 +274,6 @@ export default {
       userInfo1: {},
       userInfo2: {},
       randomId: "",
-      chartTableData: {
-        part: [],
-        verger: [],
-        mood: [],
-      },
     };
   },
   methods: {
@@ -493,6 +488,7 @@ export default {
         return;
       }
       this.showEnd = true;
+      this.disabledSendMsg = false;
       this.conversation_id && this.cidList.push(this.conversation_id);
       this.conversation_id = "";
     },
@@ -502,12 +498,8 @@ export default {
     },
     handleNewChat() {
       this.msgList = [];
-      this.chartTableData = {
-        part: [],
-        verger: [],
-        mood: [],
-      };
       this.showEnd = false;
+      this.disabledSendMsg = false;
     },
   },
   computed: {
