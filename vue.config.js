@@ -3,6 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: './',
   lintOnSave: false,
+  outputDir: 'index',
   devServer: {
     hot: true,
     proxy: {
